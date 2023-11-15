@@ -13,7 +13,7 @@ from pydrake.visualization import AddDefaultVisualization, ModelVisualizer
 
 meshcat = StartMeshcat()
 visualizer = ModelVisualizer(meshcat=meshcat)
-bar_path = '/home/ece484/throwing_sim/bar.sdf'
+bar_path = '/home/ece484/Catching_bot/throwing_sim/bar.sdf'
 # visualizer.parser().AddModels(bar_path)
 
 def create_scene(sim_time_step, plane_x_coord):
@@ -79,27 +79,27 @@ def check_intersection(plant, context, plane_x_coord):
     # print('cylinder_pose:',cylinder_pose)
     # Check if either point is close to the y-z plane
     if world_point1[2] >= 0 and world_point2[2] >= 0 :
-        if abs(world_point1[0] - plane_x_coord) < 0.00002 and abs(world_point2[0] - plane_x_coord) < 0.00002:
+        if abs(world_point1[0] - plane_x_coord) < 0.0001 and abs(world_point2[0] - plane_x_coord) < 0.0001:
             coords = (world_point1,world_point2)
             print('both touched')
-            return coords
-        elif abs(world_point1[0] - plane_x_coord) < 0.00002:   #0.0005
+            return coords, 'both'
+        elif abs(world_point1[0] - plane_x_coord) < 0.0001:   #0.0005
             # Record the z-coordinates of the points
             coords = (world_point1,world_point2)#(world_point1[2], world_point2[2])
             print('right touched')
-            return coords
-        elif abs(world_point2[0] - plane_x_coord) < 0.00002:
+            return coords, 'right'
+        elif abs(world_point2[0] - plane_x_coord) < 0.0001:
             coords = (world_point1,world_point2)
             print('left touched')
-            return coords
+            return coords, 'left'
         
         else:
-            return None
+            return None, None
     else:
-        return False
+        return False, None
 
 
-def launch_cylinder(plant, context, initial_orientation, initial_position, velocity, angle):
+def launch_cylinder(plant, context, initial_orientation, initial_position, velocity, angle, roll, pitch, yaw):
     # Convert angle to radians
     angle_rad = np.radians(angle)
     rpy = RollPitchYaw(np.radians(initial_orientation))
@@ -122,15 +122,10 @@ def launch_cylinder(plant, context, initial_orientation, initial_position, veloc
 
     # Set the initial state
     plant.SetFreeBodySpatialVelocity(plant.GetBodyByName("noodle"), 
-                                     SpatialVelocity(np.array([0, 0, 0]), initial_velocity), 
+                                     SpatialVelocity(np.array([roll, pitch, yaw]), initial_velocity), 
                                      context)
 
-    # Simulate
-    # simulator.AdvanceTo(10)  # Simulate for a duration
 
-    # Retrieve final position
-    # final_position = plant.GetPositions(plant_context)[-3:]  # Assuming the position is the last 3 entries
-    # return final_position
 
 def run_simulation(sim_time_step, initial_orientation, initial_position, plane_x_coord):
     diagram , plant= create_scene(sim_time_step, plane_x_coord)
@@ -140,6 +135,8 @@ def run_simulation(sim_time_step, initial_orientation, initial_position, plane_x
     meshcat.StartRecording()
     # import pdb; pdb.set_trace()
     for i in range(10):
+        left_z_list = []
+        right_z_list = []
         # Generate random velocity and angle
         touch_flag = False
         velocity_min = 1
@@ -150,35 +147,41 @@ def run_simulation(sim_time_step, initial_orientation, initial_position, plane_x
         angle = np.random.uniform(low=angle_min, high=angle_max)
         # velocity = 9.13
         # angle = 14.8
-        
+        roll = np.random.uniform(low=0, high=0.8)
+        pitch = np.random.uniform(low=0, high=0.2)
+        yaw = np.random.uniform(low=0, high=0.8)
         context = simulator.get_mutable_context()
         plant_context = diagram.GetMutableSubsystemContext(plant, context)
         print('angle:',angle)
         print('velocity:',velocity)
+        # print('roll:', roll, 'pitch:', pitch, 'yaw:', yaw)
         # Set the initial pose and launch the cylinder
-        # plant.SetFreeBodySpatialVelocity(plant.GetBodyByName("noodle"), SpatialVelocity(), context)
-        launch_cylinder(plant, plant_context, initial_orientation, initial_position,velocity, angle)
+
+        launch_cylinder(plant, plant_context, initial_orientation, initial_position,velocity, angle, roll, pitch, yaw)
         # Reset the simulation state for the next launch
         context.SetTime(0)
         simulator.Initialize()
         # import pdb; pdb.set_trace()
-        # simulator.AdvanceTo(3.0)  # Define launch_duration for each launch
         while context.get_time() < 3.0:
             simulator.AdvanceTo(context.get_time() + sim_time_step)
             
-            z_coords = check_intersection(plant, plant_context, plane_x_coord)
+            z_coords, touch_side = check_intersection(plant, plant_context, plane_x_coord)
             if z_coords is False:
                 break
             elif z_coords is not None:
                 touch_flag = True
+                if touch_side == 'left':
+                    left_z_list.append(z_coords[1][2])
+                else:    
+                    right_z_list.append(z_coords[0][2])
                 print("Intersection detected. left-coordinates:", z_coords[1], "right-coordinates:", z_coords[0])
                 # break
-
-        if not touch_flag:
-            print('didnt touch')
+        average_left_z = np.average(left_z_list)
+        average_right_z = np.average(right_z_list)
+        print('average_left:',average_left_z, 'average_right:',average_right_z) if touch_flag else print('didnt touch')
+        # if not touch_flag:
+        #     print('didnt touch')
         time.sleep(1.0)
-    # Launch the cylinder
-    # launch_cylinder(plant, plant_context, initial_orientation, initial_position,velocity, angle)
 
     # Record the simulation in Meshcat
     # meshcat.StartRecording()
@@ -187,12 +190,7 @@ def run_simulation(sim_time_step, initial_orientation, initial_position, plane_x
     meshcat.PublishRecording()
 
 
-# velocity_min = 1
-# velocity_max = 10
-# angle_min = 0
-# angle_max = 85
-# velocity = np.random.uniform(low=velocity_min, high=velocity_max)  # Define velocity_min and velocity_max
-# angle = np.random.uniform(low=angle_min, high=angle_max)           # Define angle_min and angle_max
+
 
 initial_position = [0, 0, 1]  # Example initial position
 initial_orientation = [90, 0, 0]
