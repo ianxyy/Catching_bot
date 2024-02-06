@@ -30,19 +30,20 @@ class MultiTaskNet(nn.Module):
 
 
 if __name__ == "__main__":
-    data = pd.read_csv('simulation_data2.csv')
+    data_1 = pd.read_csv('simulation_data2.csv')
+    data_2 = pd.read_csv('simulation_data3.csv')
+    data = pd.concat([data_1, data_2], axis=0)
     targets = data.iloc[:, -4:-2].copy()
-
     # Create binary classification targets
     # 1 if there's a touch, 0 if it's -1
     targets['LeftTouch'] = (targets['AverageLeftZ'] != -1.0).astype(int)
     targets['RightTouch'] = (targets['AverageRightZ'] != -1.0).astype(int)
 
-    # For regression, we'll use the actual values where they're not -1
-    # Replace -1 with NaN for now
+    
+    # Replace -1 with NaN
     targets.replace(-1.0, np.nan, inplace=True)
 
-    # Prepare the features (excluding time-related features and the last four original target columns)
+    # Prepare the features
     X = data.iloc[:, 1:-4].values
     y_class = targets[['LeftTouch', 'RightTouch']].values
     y_reg = targets[['AverageLeftZ', 'AverageRightZ']].values
@@ -60,7 +61,6 @@ if __name__ == "__main__":
     y_reg_tensor = torch.tensor(y_reg, dtype=torch.float32)
 
     # Create datasets, splitting the data for classification and regression
-    # For regression, we'll only take the instances where a touch occurs
     mask_left_touch = ~torch.isnan(y_reg_tensor[:, 0])
     mask_right_touch = ~torch.isnan(y_reg_tensor[:, 1])
 
@@ -82,7 +82,7 @@ if __name__ == "__main__":
     # Training and evaluation
     train_losses = []
     val_losses = []
-    for epoch in range(2000):  # Adjust the number of epochs as needed
+    for epoch in range(2000):
         model.train()  # Training mode
         train_loss = 0.0
         for inputs, class_targets, reg_targets in train_loader:

@@ -168,7 +168,7 @@ def run_simulation(sim_time_step, initial_orientation, initial_position, plane_x
     model = MultiTaskNet(input_size=5)
     model.load_state_dict(torch.load('model_state_dict.pth'))
     model.eval()
-    with open('simulation_data3.csv', mode='w', newline='') as file:
+    with open('simulation_data4.csv', mode='w', newline='') as file:
         writer = csv.writer(file)
         # Write the header
         writer.writerow(['TimeStamp', 'Velocity', 'Angle', 'Roll', 'Pitch', 'Yaw', 'AverageLeftZ', 'AverageRightZ', 'LeftTouchTime','RightTouchTime'])
@@ -179,9 +179,12 @@ def run_simulation(sim_time_step, initial_orientation, initial_position, plane_x
         meshcat.StartRecording()
         # import pdb; pdb.set_trace()
         success_count = 0
-        for i in range(2000):
-            left_z_list = [-1.0]
-            right_z_list = [-1.0]
+        loop_count = 0
+        for i in range(5000):
+            loop_count += 1
+            print('loop_count', loop_count)
+            left_z_list = []
+            right_z_list = []
             left_touch_time = -1.0
             right_touch_time = -1.0
             # Generate random velocity and angle
@@ -243,10 +246,15 @@ def run_simulation(sim_time_step, initial_orientation, initial_position, plane_x
                         right_z_list.append(z_coords[0][2])
                     print("Intersection detected. left-coordinates:", z_coords[1], "right-coordinates:", z_coords[0])
                     # break
-            average_left_z = np.average(left_z_list)
-            average_right_z = np.average(right_z_list)
+            average_left_z = np.average(left_z_list) if left_z_list else -1.0
+            average_right_z = np.average(right_z_list) if right_z_list else -1.0
             if touch_flag:
                 success_count += 1 
+            # else:
+            #     average_left_z = -1.0
+            #     average_right_z = -1.0
+            # print(left_z_list)
+            # print(right_z_list)
             print('average_left:',average_left_z, 'average_right:',average_right_z) if touch_flag else print('didnt touch')
             writer.writerow([time_stamp, velocity, angle, roll, pitch, yaw, average_left_z, average_right_z, left_touch_time, right_touch_time])
 
