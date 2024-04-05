@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro"
+       name="ur5e_hande" >
+  <xacro:arg name="ur_prefix" default=""/>
+  <xacro:arg name="hande_prefix" default=""/>
+  <!-- UR5 -->
+   <!-- by default we use PositionJointInterface, but this interface may lead to gravity bug https://github.com/ros-simulation/gazebo_ros_pkgs/issues/612. Speicifying PID for the arm, switching to VelocityJointInterface or upgrading to Gazebo9 may solve the problem. Here, we switch to Gazebo9-->
+  <xacro:arg name="transmission_hw_interface" default="hardware_interface/EffortJointInterface"/>
+
+
+  <!-- common stuff -->
+  <xacro:include filename="$(find ur_e_description)/urdf/common.gazebo.xacro" />
+
+  <!-- ur5e -->
+  <xacro:include filename="$(find ur_e_description)/urdf/ur5e.urdf.xacro" />
+
+  <!-- arm -->
+  <xacro:arg name="kinematics_config" default="$(find ur_e_description)/config/ur5e_default.yaml"/>
+  <xacro:ur5e_robot prefix="" joint_limited="false"
+    kinematics_file="${load_yaml('$(arg kinematics_config)')}"
+    />
+
+  <!-- include Hand-E gripper -->
+    <!-- hand-e -->
+  <xacro:include filename="$(find robotiq_hande_gripper_visualization)/urdf/robotiq_hande.urdf.xacro" />
+    <!-- gripper -->
+    <!-- you will need to change the joint name in ???.yaml and your packages according to the prefix you set -->
+  <xacro:robotiq_hande prefix="$(arg hande_prefix)" MAC="_000000000004" transmission_hw_interface="$(arg transmission_hw_interface)"/>
+
+  <link name="world" />
+
+  <joint name="world_joint" type="fixed">
+    <parent link="world" />
+    <child link = "base_link" />
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+  </joint>
+
+  <!-- connect ur and the hande-->
+  <joint name="gripper_mount_joint" type="fixed">
+    <parent link="$(arg ur_prefix)tool0" />
+    <child link="$(arg hande_prefix)robotiq_hande_base_link" />
+    <origin xyz="0 0 0" rpy="0 0 0" /> <!-- it is the value I guess-->
+  </joint>
+
+</robot>

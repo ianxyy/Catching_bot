@@ -1,0 +1,35 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+    <model name="ring_model">
+        <static>false</static>
+        <link name="ring_link">
+            <inertial>
+                <mass>0.1</mass>
+                <inertia>
+                    <ixx>0.0001</ixx>
+                    <ixy>0</ixy>
+                    <ixz>0</ixz>
+                    <iyy>0.0001</iyy>
+                    <iyz>0</iyz>
+                    <izz>0.0001</izz>
+                </inertia>
+            </inertial>
+            <visual name="ring_visual">
+                <geometry>
+                    <mesh>
+                        <uri>ring.obj</uri>
+                        <scale>1 1 1</scale>
+                    </mesh>
+                </geometry>
+            </visual>
+            <collision name="ring_collision">
+                <geometry>
+                    <mesh>
+                        <uri>ring.obj</uri>
+                        <scale>1 1 1</scale>
+                    </mesh>
+                </geometry>
+            </collision>
+        </link>
+    </model>
+</sdf>

@@ -1,0 +1,144 @@
+# This file is licensed under the MIT-0 License.
+# See LICENSE-MIT-0.txt in the current directory.
+
+# This demo simulation shows an IIWA arm with an attached WSG gripper.
+Demo:
+  directives:
+  # - add_model:
+  #     name: noodle
+  #     file: package://drake/examples/manipulation_station/models/bar.sdf
+      # default_free_body_pose:
+      #   "noodle":
+      #       translation: [0, 0, 1]
+      #       rotation: !Rpy { deg: [90, 0, 0] }
+  - add_model:
+      name: ring
+      file: package://drake/examples/manipulation_station/models/ring_cylinder.sdf
+  - add_model:
+      name: floor
+      file: package://drake/examples/manipulation_station/models/floor.sdf
+  - add_model:
+      name: iiwa
+      file: package://drake/manipulation/models/iiwa_description/urdf/iiwa14_spheres_dense_collision.urdf
+      default_joint_positions:     
+
+        # iiwa_joint_1: [-2.02981889] #[-2.09] #[0] # [0.11163761] [-2.09, 0.46, 0.78, -1.78, -0.2, -1.50, 1.3]
+        # iiwa_joint_2: [1.31595121] #[0.46] #[0] # [0.73465727 ]
+        # iiwa_joint_3: [2.14975521] #[0.78] #[0] # [-1.42007506]
+        # iiwa_joint_4: [-1.74829194] #[-1.78] #[0] # [-0.40901375 ]
+        # iiwa_joint_5: [-2.53887918] #[-0.2] #[0] # [0.6681711]
+        # iiwa_joint_6: [0.75388712] #[-1.50] #[0] # [-0.73096267 ]
+        # iiwa_joint_7: [-0.94564444 ] #[1.3] #[0] # [-0.02]
+        iiwa_joint_1: [-2.09] #[0] # [0.11163761] [-2.09, 0.46, 0.78, -1.78, -0.2, -1.50, 1.3]
+        iiwa_joint_2: [0.46] #[0] # [0.73465727 ]
+        iiwa_joint_3: [0.78] #[0] # [-1.42007506]
+        iiwa_joint_4: [-1.78] #[0] # [-0.40901375 ]
+        iiwa_joint_5: [-0.2] #[0] # [0.6681711]
+        iiwa_joint_6: [-1.50] #[0] # [-0.73096267 ]
+        iiwa_joint_7: [1.3] #[0] # [-0.02]
+  - add_frame:
+      name: iiwa_on_world
+      X_PF:
+        base_frame: world
+        translation: [2.3, 0.5, 0.0]
+        rotation: !Rpy { deg: [0, 0, -90] }
+  - add_weld:
+      parent: iiwa_on_world
+      child: iiwa::base
+  - add_model:
+      name: wsg
+      file: package://drake/manipulation/models/wsg_50_description/sdf/schunk_wsg_50_with_tip.sdf
+      default_joint_positions:
+        left_finger_sliding_joint: [-0.055]
+        right_finger_sliding_joint: [0.055]
+  # - add_frame:
+  #     name: wsg_on_iiwa
+  #     X_PF:
+  #       base_frame: iiwa_link_7
+  #       translation: [0, 0, 0.08]
+  #       rotation: !Rpy { deg: [90, 0, 90] }
+  # - add_weld:
+  #     parent: wsg_on_iiwa
+  #     child: wsg::body
+  - add_weld:
+      parent: iiwa::iiwa_link_7
+      child: wsg::body_1
+      X_PC:
+          translation: [0, 0, 0.09]
+          rotation: !Rpy { deg: [90, 0, 90]}
+
+  - add_model:
+      name: iiwa_2
+      file: package://drake/manipulation/models/iiwa_description/urdf/iiwa14_spheres_dense_collision.urdf
+      default_joint_positions:     
+
+        # iiwa_joint_1: [ 1.66573262] #[2.09] #[0] # [0.11163761] [2.09,  0.46, -0.78, -1.78,  0.2, -1.5,  -1.3]
+        # iiwa_joint_2: [ 1.47287426] #[0.46] #[0] # [0.73465727 ]
+        # iiwa_joint_3: [-2.23531341] #[-0.78] #[0] # [-1.42007506]
+        # iiwa_joint_4: [-1.50961309] #[-1.78] #[0] # [-0.40901375 ]
+        # iiwa_joint_5: [ 0.49256872] #[0.2] #[0] # [0.6681711]
+        # iiwa_joint_6: [-1.3109021 ] #[-1.5] #[0] # [-0.73096267 ]
+        # iiwa_joint_7: [-0.46245998] #[1.3] #[0] # [-0.02]
+        iiwa_joint_1: [2.09] #[0] # [0.11163761] [2.09,  0.46, -0.78, -1.78,  0.2, -1.5,  -1.3]
+        iiwa_joint_2: [0.46] #[0] # [0.73465727 ]
+        iiwa_joint_3: [-0.78] #[0] # [-1.42007506]
+        iiwa_joint_4: [-1.78] #[0] # [-0.40901375 ]
+        iiwa_joint_5: [0.2] #[0] # [0.6681711]
+        iiwa_joint_6: [-1.5] #[0] # [-0.73096267 ]
+        iiwa_joint_7: [1.3]
+  - add_frame:
+      name: iiwa_on_world_2
+      X_PF:
+        base_frame: world
+        translation: [2.3, -0.50, 0.0]
+        rotation: !Rpy { deg: [0, 0, 90] }
+  - add_weld:
+      parent: iiwa_on_world_2
+      child: iiwa_2::base
+  - add_model:
+      name: wsg_2
+      file: package://drake/manipulation/models/wsg_50_description/sdf/schunk_wsg_50_with_tip_2.sdf
+      default_joint_positions:
+        left_finger_sliding_joint: [-0.055]
+        right_finger_sliding_joint: [0.055]
+  # - add_frame:
+  #     name: wsg_on_iiwa_2
+  #     X_PF:
+  #       base_frame: iiwa_link_7
+  #       translation: [0, 0, 0.08]
+  #       rotation: !Rpy { deg: [90, 0, 90] }
+  # - add_weld:
+  #     parent: wsg_on_iiwa_2
+  #     child: wsg::body
+  - add_weld:
+      parent: iiwa_2::iiwa_link_7
+      child: wsg_2::body_2
+      X_PC:
+          translation: [0, 0, 0.09]
+          rotation: !Rpy { deg: [90, 0, 90]}
+
+  lcm_buses:
+    driver_traffic:
+      # Use a non-default LCM url to communicate with the robot.
+      lcm_url: udpm://239.241.129.92:20185?ttl=0
+    driver_traffic_2:
+      lcm_url: udpm://239.241.129.93:20186?ttl=0
+  # cameras:
+  #   oracular_view:
+  #     name: camera_0
+  #     X_PB:
+  #       translation: [1.5, 0.8, 1.25]
+  #       rotation: !Rpy { deg: [-120, 5, 125] }
+      # show_rgb: True
+  # model_drivers:
+    # iiwa: !IiwaDriver
+    #   hand_model_name: wsg
+    #   lcm_bus: driver_traffic
+    # wsg: !SchunkWsgDriver
+    #   lcm_bus: driver_traffic
+    # iiwa_2: !IiwaDriver
+    #   hand_model_name: wsg_2
+    #   lcm_bus: driver_traffic_2
+    # wsg_2: !SchunkWsgDriver
+    #   lcm_bus: driver_traffic_2
+    

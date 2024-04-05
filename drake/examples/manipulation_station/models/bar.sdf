@@ -1,0 +1,43 @@
+<?xml version="1.0" ?>
+<sdf version="1.7">
+    <model name="pool_noodle">
+        <pose>0 0 0 0 0 0</pose>
+        <link name="noodle">
+            <inertial>
+                <mass>0.2</mass>
+                <inertia>
+                    <ixx>0.0001</ixx>
+                    <ixy>0.0</ixy>
+                    <ixz>0.0</ixz>
+                    <iyy>0.0001</iyy>
+                    <iyz>0.0</iyz>
+                    <izz>0.0002</izz>
+                </inertia>
+            </inertial>
+            <collision name="collision">
+                <geometry>
+                    <cylinder>
+                        <radius>0.02159</radius>
+                        <length>0.9144</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name="visual">
+                <geometry>
+                    <cylinder>
+                        <radius>0.02159</radius>
+                        <length>0.9144</length>
+                    </cylinder>
+                </geometry>
+                <material>
+                    <ambient>0.0 1.0 0.0 1</ambient>
+                    <diffuse>0.0 1.0 0.0 1</diffuse>
+                    <specular>0.1 0.1 0.1 1</specular>
+                </material>
+            </visual>
+            <!-- Additional features available in SDF 1.7 can be added here -->
+        </link>
+        <!-- Additional link, joint, sensor definitions, etc., can be added here -->
+    </model>
+</sdf>
+

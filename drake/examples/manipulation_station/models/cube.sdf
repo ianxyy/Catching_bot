@@ -1,0 +1,29 @@
+<?xml version='1.0'?>
+<sdf version='1.6'>
+    <model name='my_cube'>
+    	<pose>0 0 1.345 0 0 0</pose>
+        <static>true</static>
+        <link name='cube'>
+            <visual name='visual'>
+                <geometry>
+                    <box>
+                        <size>0.3 0.3 0.3</size>
+                    </box>
+                </geometry>
+                <material>
+                    <ambient>1 0 0 1</ambient>
+                    <diffuse>0 1 0 1</diffuse>
+                    <specular>0 0 1 1</specular>
+                </material>
+            </visual>
+            <collision name='collision'>
+                <geometry>
+                    <box>
+                        <size>0.3 0.3 0.3</size>
+                    </box>
+                </geometry>
+            </collision>
+        </link>
+    </model>
+</sdf>
+

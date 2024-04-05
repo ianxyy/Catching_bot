@@ -1,0 +1,1927 @@
+<?xml version='1.0'?>
+<sdf version='1.6'>
+    <model name='approximate_ring'>
+        <static>false</static>
+
+        <link name='segment_0'>
+            <pose>0.35 0.0 0 0 0 0.0</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_1'>
+            <pose>0.3492506231335112 0.02289109523055007 0 0 0 0.06544984694978735</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_2'>
+            <pose>0.3470057014808336 0.045684167277018045 0 0 0 0.1308996938995747</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_3'>
+            <pose>0.34327484814113063 0.06828161270564488 0 0 0 0.19634954084936207</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_4'>
+            <pose>0.3380740392011739 0.09058666578588226 0 0 0 0.2617993877991494</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_5'>
+            <pose>0.331425545323287 0.11250381285610654 0 0 0 0.3272492347489368</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_6'>
+            <pose>0.3233578363789503 0.13393920132778142 0 0 0 0.39269908169872414</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_7'>
+            <pose>0.3139054595364409 0.15480104157665045 0 0 0 0.45814892864851153</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_8'>
+            <pose>0.30310889132455354 0.17499999999999996 0 0 0 0.5235987755982988</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_9'>
+            <pose>0.29101436430589084 0.19444958155686076 0 0 0 0.5890486225480862</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_10'>
+            <pose>0.2776736691019323 0.21306650015305223 0 0 0 0.6544984694978736</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_11'>
+            <pose>0.2631439326176421 0.23077103528502407 0 0 0 0.7199483164476609</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_12'>
+            <pose>0.24748737341529164 0.2474873734152916 0 0 0 0.7853981633974483</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_13'>
+            <pose>0.23077103528502407 0.2631439326176421 0 0 0 0.8508480103472357</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_14'>
+            <pose>0.21306650015305223 0.2776736691019323 0 0 0 0.9162978572970231</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_15'>
+            <pose>0.1944495815568608 0.29101436430589084 0 0 0 0.9817477042468103</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_16'>
+            <pose>0.17500000000000002 0.3031088913245535 0 0 0 1.0471975511965976</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_17'>
+            <pose>0.15480104157665042 0.3139054595364409 0 0 0 1.1126473981463851</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_18'>
+            <pose>0.13393920132778142 0.3233578363789503 0 0 0 1.1780972450961724</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_19'>
+            <pose>0.11250381285610658 0.33142554532328694 0 0 0 1.2435470920459597</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_20'>
+            <pose>0.09058666578588226 0.3380740392011739 0 0 0 1.3089969389957472</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_21'>
+            <pose>0.06828161270564491 0.34327484814113063 0 0 0 1.3744467859455345</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_22'>
+            <pose>0.045684167277018094 0.3470057014808336 0 0 0 1.4398966328953218</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_23'>
+            <pose>0.022891095230550065 0.3492506231335112 0 0 0 1.5053464798451093</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_24'>
+            <pose>2.143131898507868e-17 0.35 0 0 0 1.5707963267948966</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_25'>
+            <pose>-0.02289109523055002 0.3492506231335112 0 0 0 1.6362461737446838</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_26'>
+            <pose>-0.04568416727701806 0.3470057014808336 0 0 0 1.7016960206944713</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_27'>
+            <pose>-0.06828161270564487 0.34327484814113063 0 0 0 1.7671458676442586</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_28'>
+            <pose>-0.09058666578588229 0.3380740392011739 0 0 0 1.8325957145940461</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_29'>
+            <pose>-0.11250381285610654 0.331425545323287 0 0 0 1.8980455615438334</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_30'>
+            <pose>-0.1339392013277814 0.3233578363789503 0 0 0 1.9634954084936207</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_31'>
+            <pose>-0.1548010415766504 0.3139054595364409 0 0 0 2.028945255443408</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_32'>
+            <pose>-0.1749999999999999 0.30310889132455354 0 0 0 2.0943951023931953</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_33'>
+            <pose>-0.1944495815568608 0.2910143643058908 0 0 0 2.159844949342983</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_34'>
+            <pose>-0.21306650015305223 0.2776736691019323 0 0 0 2.2252947962927703</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_35'>
+            <pose>-0.23077103528502407 0.2631439326176421 0 0 0 2.2907446432425576</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_36'>
+            <pose>-0.2474873734152916 0.24748737341529164 0 0 0 2.356194490192345</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_37'>
+            <pose>-0.263143932617642 0.23077103528502413 0 0 0 2.421644337142132</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_38'>
+            <pose>-0.27767366910193225 0.21306650015305229 0 0 0 2.4870941840919194</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_39'>
+            <pose>-0.29101436430589084 0.19444958155686076 0 0 0 2.552544031041707</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_40'>
+            <pose>-0.30310889132455354 0.17499999999999996 0 0 0 2.6179938779914944</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_41'>
+            <pose>-0.3139054595364409 0.15480104157665045 0 0 0 2.6834437249412817</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_42'>
+            <pose>-0.3233578363789503 0.13393920132778145 0 0 0 2.748893571891069</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_43'>
+            <pose>-0.33142554532328694 0.11250381285610661 0 0 0 2.8143434188408563</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_44'>
+            <pose>-0.33807403920117385 0.09058666578588236 0 0 0 2.8797932657906435</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_45'>
+            <pose>-0.34327484814113063 0.06828161270564485 0 0 0 2.9452431127404313</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_46'>
+            <pose>-0.3470057014808336 0.045684167277018045 0 0 0 3.0106929596902186</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_47'>
+            <pose>-0.3492506231335112 0.02289109523055009 0 0 0 3.076142806640006</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_48'>
+            <pose>-0.35 4.286263797015736e-17 0 0 0 3.141592653589793</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_49'>
+            <pose>-0.3492506231335112 -0.022891095230550003 0 0 0 3.2070425005395804</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_50'>
+            <pose>-0.34700570148083365 -0.04568416727701796 0 0 0 3.2724923474893677</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_51'>
+            <pose>-0.34327484814113063 -0.06828161270564492 0 0 0 3.3379421944391554</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_52'>
+            <pose>-0.3380740392011739 -0.09058666578588227 0 0 0 3.4033920413889427</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_53'>
+            <pose>-0.331425545323287 -0.11250381285610653 0 0 0 3.46884188833873</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_54'>
+            <pose>-0.3233578363789504 -0.13393920132778137 0 0 0 3.5342917352885173</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_55'>
+            <pose>-0.3139054595364409 -0.15480104157665037 0 0 0 3.5997415822383045</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_56'>
+            <pose>-0.3031088913245535 -0.17500000000000002 0 0 0 3.6651914291880923</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_57'>
+            <pose>-0.29101436430589084 -0.1944495815568608 0 0 0 3.7306412761378795</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_58'>
+            <pose>-0.2776736691019323 -0.21306650015305223 0 0 0 3.796091123087667</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_59'>
+            <pose>-0.26314393261764213 -0.23077103528502407 0 0 0 3.861540970037454</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_60'>
+            <pose>-0.24748737341529167 -0.2474873734152916 0 0 0 3.9269908169872414</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_61'>
+            <pose>-0.23077103528502416 -0.263143932617642 0 0 0 3.9924406639370287</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_62'>
+            <pose>-0.21306650015305229 -0.2776736691019322 0 0 0 4.057890510886816</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_63'>
+            <pose>-0.19444958155686076 -0.29101436430589084 0 0 0 4.123340357836604</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_64'>
+            <pose>-0.17500000000000016 -0.30310889132455343 0 0 0 4.1887902047863905</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_65'>
+            <pose>-0.15480104157665048 -0.3139054595364409 0 0 0 4.254240051736178</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_66'>
+            <pose>-0.1339392013277813 -0.3233578363789504 0 0 0 4.319689898685966</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_67'>
+            <pose>-0.11250381285610662 -0.33142554532328694 0 0 0 4.385139745635753</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_68'>
+            <pose>-0.09058666578588222 -0.3380740392011739 0 0 0 4.4505895925855405</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_69'>
+            <pose>-0.06828161270564503 -0.3432748481411306 0 0 0 4.516039439535327</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_70'>
+            <pose>-0.045684167277018066 -0.3470057014808336 0 0 0 4.581489286485115</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_71'>
+            <pose>-0.022891095230549954 -0.3492506231335112 0 0 0 4.646939133434903</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_72'>
+            <pose>-6.429395695523604e-17 -0.35 0 0 0 4.71238898038469</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_73'>
+            <pose>0.022891095230550138 -0.3492506231335112 0 0 0 4.777838827334477</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_74'>
+            <pose>0.04568416727701794 -0.34700570148083365 0 0 0 4.843288674284264</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_75'>
+            <pose>0.0682816127056449 -0.34327484814113063 0 0 0 4.908738521234052</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_76'>
+            <pose>0.09058666578588209 -0.3380740392011739 0 0 0 4.974188368183839</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_77'>
+            <pose>0.11250381285610651 -0.331425545323287 0 0 0 5.0396382151336265</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_78'>
+            <pose>0.1339392013277815 -0.3233578363789503 0 0 0 5.105088062083414</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_79'>
+            <pose>0.15480104157665034 -0.31390545953644095 0 0 0 5.170537909033201</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_80'>
+            <pose>0.17500000000000002 -0.3031088913245535 0 0 0 5.235987755982989</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_81'>
+            <pose>0.19444958155686062 -0.2910143643058909 0 0 0 5.301437602932776</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_82'>
+            <pose>0.21306650015305217 -0.2776736691019323 0 0 0 5.366887449882563</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_83'>
+            <pose>0.23077103528502416 -0.26314393261764196 0 0 0 5.432337296832351</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_84'>
+            <pose>0.24748737341529156 -0.24748737341529167 0 0 0 5.497787143782138</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_85'>
+            <pose>0.26314393261764213 -0.23077103528502405 0 0 0 5.563236990731926</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_86'>
+            <pose>0.2776736691019322 -0.21306650015305229 0 0 0 5.6286868376817125</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_87'>
+            <pose>0.29101436430589084 -0.19444958155686076 0 0 0 5.6941366846315</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_88'>
+            <pose>0.30310889132455343 -0.17500000000000016 0 0 0 5.759586531581287</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_89'>
+            <pose>0.3139054595364409 -0.15480104157665048 0 0 0 5.825036378531075</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_90'>
+            <pose>0.3233578363789504 -0.13393920132778134 0 0 0 5.8904862254808625</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_91'>
+            <pose>0.33142554532328694 -0.11250381285610664 0 0 0 5.955936072430649</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_92'>
+            <pose>0.3380740392011739 -0.09058666578588223 0 0 0 6.021385919380437</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_93'>
+            <pose>0.3432748481411306 -0.06828161270564505 0 0 0 6.086835766330224</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_94'>
+            <pose>0.3470057014808336 -0.04568416727701809 0 0 0 6.152285613280012</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+        <link name='segment_95'>
+            <pose>0.3492506231335112 -0.02289109523054998 0 0 0 6.217735460229799</pose>
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.05000000000000002</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+    
+    </model>
+</sdf>

@@ -1,0 +1,28 @@
+<?xml version='1.0'?>
+<sdf version='1.6'>
+    <model name='floor'>
+        <static>true</static>
+        <link name='floor'>
+            <collision name='collision'>
+                <geometry>
+                    <box>
+                        <size>1.5 2 0.1</size> <!-- Width, Depth, Height -->
+                    </box>
+                </geometry>
+            </collision>
+            <visual name='visual'>
+                <geometry>
+                    <box>
+                        <size>1.5 2 0.1</size> <!-- Same dimensions for visual representation -->
+                    </box>
+                </geometry>
+                <material>
+                    <ambient>0.6 0.6 0.6 1</ambient>  <!-- Optional: Adjust the floor color -->
+                </material>
+            </visual>
+            <!-- Optionally, position the floor slightly above or at the origin -->
+            <pose>2.3 0 -0.05 0 0 0</pose> <!-- Adjust Z to place the floor; here, it's half the box's height to align its top with the world's origin -->
+        </link>
+    </model>
+</sdf>
+
