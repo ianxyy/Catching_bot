@@ -1,8 +1,8 @@
 <?xml version="1.0" ?>
 <sdf version="1.7">
-    <model name="pool_noodle">
+    <model name="pool_cuboid"> <!-- Change the model name if necessary -->
         <pose>0 0 0 0 0 0</pose>
-        <link name="noodle">
+        <link name="cuboid">
             <inertial>
                 <mass>0.2</mass>
                 <inertia>
@@ -16,18 +16,16 @@
             </inertial>
             <collision name="collision">
                 <geometry>
-                    <cylinder>
-                        <radius>0.03159</radius> <!--0.02159 0.03159 0.01559-->
-                        <length>1.8288</length>  <!--0.9144  1.8288  1.3716-->
-                    </cylinder>
+                    <box>
+                        <size>0.05 1.37 0.05</size> <!-- Example dimensions for the cuboid -->
+                    </box>
                 </geometry>
             </collision>
             <visual name="visual">
                 <geometry>
-                    <cylinder>
-                        <radius>0.03159</radius>
-                        <length>1.8288</length>
-                    </cylinder>
+                    <box>
+                        <size>0.05 1.37 0.05</size>
+                    </box>
                 </geometry>
                 <material>
                     <ambient>0.0 1.0 0.0 1</ambient>
@@ -40,4 +38,3 @@
         <!-- Additional link, joint, sensor definitions, etc., can be added here -->
     </model>
 </sdf>
-
