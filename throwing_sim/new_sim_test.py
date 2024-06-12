@@ -88,11 +88,14 @@ from manipulation.scenarios import AddMultibodyTriad
 # from bar_system import BarPositionDetector, SpecificBodyPoseExtractor
 # from camera import PointCloudGeneration, add_rgbd_sensors
 # from robot_commander import IK, wsg_2, MotionPlanner_wsg
-from perception_mit import PointCloudGenerator, TrajectoryPredictor, add_cameras
+from perception_mit_ring import PointCloudGenerator, TrajectoryPredictor, add_cameras
 # from grasp_select_ring import GraspSelector
 from grasp_select_bar import GraspSelector
 from motion_planner import MotionPlanner
-from graspnet_data import GraspPredictor
+# from graspnet_data_test import GraspPredictor
+from graspnet_data_test_ring import GraspPredictor
+from log_testresults import Log
+
 
 @dc.dataclass
 class Scenario:
@@ -111,7 +114,7 @@ class Scenario:
 
     # Simulator configuration (integrator and publisher parameters).
     simulator_config: SimulatorConfig = SimulatorConfig(
-        max_step_size=5e-6, #5e-3,
+        max_step_size=1e-3, #5e-6, #5e-3,
         accuracy=1.0e-4, #1.0e-4,
         target_realtime_rate=1.0)
 
@@ -215,17 +218,23 @@ def launch_obj(plant, context, initial_pose, velocity, roll, pitch, yaw, obj):
                                      context)
 
 
-def generate_random_initial_pose():
+def generate_random_initial_pose(obj):
     # Randomize initial position within specified ranges
-    x_pos = np.random.uniform(-0.3, 0)  # Range for x: [-1, 0]
-    y_pos = -1#np.random.uniform(-0.5, 0.5)  # Range for y: [-0.5, 0.5]
+    x_pos = np.random.uniform(-0.3, 0.1)  # Range for x: [-1, 0]
+    y_pos = np.random.uniform(-1.2, 1.2)  # Range for y: [-0.5, 0.5]
     z_pos = 0  # Fixed value for z
 
     # Randomize initial orientation within specified ranges
     # Convert degrees to radians for RollPitchYaw
-    x_rot_deg = 90  # Fixed value for x
-    y_rot_deg = np.random.uniform(-5, 5)  # Range for y: [-5, 5]
-    z_rot_deg = np.random.uniform(-14, 14)  # Range for z: [-14, 14]
+    if obj == 'noodle':
+        x_rot_deg = 90  # Fixed value for x
+        y_rot_deg = np.random.uniform(-5, 5)  # Range for y: [-5, 5]
+        z_rot_deg = np.random.uniform(-14, 14)  # Range for z: [-14, 14]
+    if obj == 'ring' or obj == 'cuboid':
+        x_rot_deg = np.random.uniform(-5, 5)
+        y_rot_deg = 90  # Range for y: [-5, 5]
+        z_rot_deg = np.random.uniform(-14, 14)  # Range for z: [-14, 14]
+
     launching_position = [x_pos,y_pos,z_pos]
     launching_orientation = [x_rot_deg,y_rot_deg,z_rot_deg]
     print(f'launching position:{launching_position}, orientation:{launching_orientation}')
@@ -260,8 +269,12 @@ def run(*, scenario, graphviz=None, meshcat):
         directives=ModelDirectives(directives=scenario.directives),
         plant=sim_plant)
 
+    #Random seed 
+    grasp_random_seed = np.random.randint(0, 100000)
+    np.random.seed(grasp_random_seed)
+
     #thrown model
-    obj_name = 'noodle' #noodle ring
+    obj_name = 'ring' #noodle ring cuboid
     #thrown velocity
     velocity = np.random.uniform(low=5.0, high=6.0)
     print(f'velcocity:{velocity}')
@@ -328,14 +341,11 @@ def run(*, scenario, graphviz=None, meshcat):
 
     #object initial state setup
     initial_position = [-1.5, 0, 1]  # Example initial position y=[-0.5,0.5] z = 1 [-0.5, -0.5, 1]
-    if obj_name == 'ring':
-        initial_orientation = [0, 0, 0] #for cylinder [90, 0, 14] ;
-    elif obj_name == 'noodle':
-        launching_position, launching_orientation, initial_pose = generate_random_initial_pose()
+    # if obj_name == 'ring':
+    #     launching_position, launching_orientation, initial_pose = generate_random_initial_pose(obj_name)
+    # elif obj_name == 'noodle' or '':
+    launching_position, launching_orientation, initial_pose = generate_random_initial_pose(obj_name)
 
-    #Random seed 
-    grasp_random_seed = np.random.randint(0, 10000)
-    np.random.seed(grasp_random_seed)
         
     #iiwa_1
     model_instance_iiwa_1 = sim_plant.GetModelInstanceByName('iiwa')
@@ -464,7 +474,7 @@ def run(*, scenario, graphviz=None, meshcat):
 
     #Motion Planner
     motion_planner = builder.AddSystem(MotionPlanner(sim_plant, meshcat))
-    builder.Connect(grasp_selector.GetOutputPort("grasp_selection"), motion_planner.GetInputPort("grasp_selection"))
+    # builder.Connect(grasp_selector.GetOutputPort("grasp_selection"), motion_planner.GetInputPort("grasp_selection"))
     builder.Connect(body_poses_output_port, motion_planner.GetInputPort("iiwa_current_pose_1"))
     builder.Connect(body_poses_output_port, motion_planner.GetInputPort("iiwa_current_pose_2"))
     builder.Connect(traj_pred_system.GetOutputPort("object_trajectory"), motion_planner.GetInputPort("object_trajectory"))
@@ -516,8 +526,19 @@ def run(*, scenario, graphviz=None, meshcat):
     grasp_net = builder.AddSystem(GraspPredictor(sim_plant, scene_graph, obj_name, grasp_random_seed, velocity, roll, launching_position, launching_orientation, meshcat))
     builder.Connect(traj_pred_system.GetOutputPort("object_trajectory"), grasp_net.GetInputPort("object_trajectory"))
     builder.Connect(traj_pred_system.GetOutputPort("realtime_point_cloud"), grasp_net.GetInputPort("object_pc"))
-    builder.Connect(grasp_selector.GetOutputPort("grasp_selection"), grasp_net.GetInputPort("grasp_selection"))
-    builder.Connect(sim_plant.get_contact_results_output_port(), grasp_net.GetInputPort("contact_results_input"))
+    # builder.Connect(grasp_selector.GetOutputPort("grasp_selection"), grasp_net.GetInputPort("grasp_selection"))
+    # builder.Connect(sim_plant.get_contact_results_output_port(), grasp_net.GetInputPort("contact_results_input"))
+    builder.Connect(grasp_net.GetOutputPort("grasp_selection_output"), motion_planner.GetInputPort("grasp_selection"))
+
+    #log results
+    log_result = builder.AddSystem(Log(sim_plant, scene_graph, obj_name, grasp_random_seed, velocity, roll, launching_position, launching_orientation, meshcat))
+    builder.Connect(sim_plant.get_contact_results_output_port(), log_result.GetInputPort("contact_results_input"))
+    builder.Connect(grasp_net.GetOutputPort("grasp_selection_output"), log_result.GetInputPort("grasp_selection"))
+    #Retrieve Noodle State
+    # body_poses_output_port = sim_plant.get_body_poses_output_port()
+    # state = builder.AddSystem(SpecificBodyPoseExtractor(sim_plant, body_poses_output_port))
+    # builder.Connect(body_poses_output_port, state.GetInputPort('body_poses'))
+    # builder.Connect(state.GetOutputPort('noodle_pose'), grasp_net.GetInputPort('noodle_state'))
 
     # Add visualization.
     ApplyVisualizationConfig(scenario.visualization, builder, lcm_buses)
@@ -553,7 +574,7 @@ def run(*, scenario, graphviz=None, meshcat):
     obj_point_cloud_system.CapturePointCloud(obj_point_cloud_system.GetMyMutableContextFromRoot(context))
     launch_obj(sim_plant, plant_context, initial_pose, velocity, roll, pitch, yaw, obj_name)#angle, roll, pitch, yaw)
       
-    simulator.AdvanceTo(1.0)
+    simulator.AdvanceTo(0.86)
     meshcat.Delete('/')
 
 

@@ -1,7 +1,7 @@
 import math
 num_segments = 300  # Number of segments to approximate the ring
-inner_radius = 0.37  # Inner radius of the ring
-outer_radius = 0.4  # Outer radius of the ring
+inner_radius = 0.32  # Inner radius of the ring
+outer_radius = 0.35  # Outer radius of the ring
 height = 0.05  # Height of the ring
 
 # Calculate the angle between each segment
@@ -73,7 +73,7 @@ sdf_content += """
 
 # The sdf_content now contains the SDF definition for the ring
 # print(sdf_content)
-with open('/home/ece484/drake_env/lib/python3.8/site-packages/pydrake/share/drake/examples/manipulation_station/models/ring_cylinder.sdf', "w") as file:
+with open('/home/haonan/Catching_bot/throwing_sim/ring_cylinder_size2.sdf', "w") as file:
     file.write(sdf_content)
 
 

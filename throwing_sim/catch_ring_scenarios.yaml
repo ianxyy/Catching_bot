@@ -13,7 +13,7 @@ Demo:
       #       rotation: !Rpy { deg: [90, 0, 0] }
   - add_model:
       name: ring
-      file: package://drake/examples/manipulation_station/models/ring_cylinder.sdf
+      file: package://drake/examples/manipulation_station/models/elliptical_ring_cylinder.sdf
   - add_model:
       name: floor
       file: package://drake/examples/manipulation_station/models/floor.sdf

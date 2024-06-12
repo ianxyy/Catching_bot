@@ -354,10 +354,11 @@ class MotionPlanner(LeafSystem):
         body_poses_2 = self.get_input_port(2).Eval(context)  # "iiwa_current_pose_2" input port
         gripper_2_body_idx = self.original_plant.GetBodyByName("body_2", self.gripper_instance_2).index()  # BodyIndex object
         current_gripper_pose_2 = body_poses_2[gripper_2_body_idx]  # RigidTransform object
-        AddMeshcatTriad(self.meshcat, "goal1", X_PT=current_gripper_pose_1, opacity=0.5)
-        self.meshcat.SetTransform("goal1", current_gripper_pose_1)
-        AddMeshcatTriad(self.meshcat, "goal2", X_PT=current_gripper_pose_2, opacity=0.5)
-        self.meshcat.SetTransform("goal2", current_gripper_pose_2)
+        if self.visualize:
+            AddMeshcatTriad(self.meshcat, "goal1", X_PT=current_gripper_pose_1, opacity=0.5)
+            self.meshcat.SetTransform("goal1", current_gripper_pose_1)
+            AddMeshcatTriad(self.meshcat, "goal2", X_PT=current_gripper_pose_2, opacity=0.5)
+            self.meshcat.SetTransform("goal2", current_gripper_pose_2)
         # Get current iiwa positions and velocities
         iiwa_state_1 = self.get_input_port(4).Eval(context) # "iiwa_state_1"
         q_current_1 = iiwa_state_1[:7]
@@ -405,7 +406,7 @@ class MotionPlanner(LeafSystem):
         grasp = self.get_input_port(0).Eval(context)
         X_WG1, obj_catch_t = grasp['gripper1']
         X_WG2, obj_catch_t = grasp['gripper2']
-        self.obj_catch_t = obj_catch_t
+        self.obj_catch_t = obj_catch_t if obj_catch_t != 0 else np.inf
         if (X_WG1.IsExactlyEqualTo(RigidTransform()) or X_WG2.IsExactlyEqualTo(RigidTransform())):
             print("received default catch pose. returning from compute_traj.")
             return
@@ -924,6 +925,8 @@ class MotionPlanner(LeafSystem):
             obj_body_name = "noodle"
         elif self.original_plant.HasBodyNamed("ring"):
             obj_body_name = "ring"
+        elif self.original_plant.HasBodyNamed("cuboid"):
+            obj_body_name = "cuboid"
         # elif self.original_plant.HasBodyNamed("pill_bottle"):
         #     obj_body_name = "pill_bottle"
 
@@ -957,6 +960,8 @@ class MotionPlanner(LeafSystem):
             obj_body_name = "noodle"
         elif self.original_plant.HasBodyNamed("ring"):
             obj_body_name = "ring"
+        elif self.original_plant.HasBodyNamed("cuboid"):
+            obj_body_name = "cuboid"
         # elif self.original_plant.HasBodyNamed("pill_bottle"):
         #     obj_body_name = "pill_bottle"
 

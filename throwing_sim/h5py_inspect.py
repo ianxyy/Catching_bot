@@ -2,74 +2,54 @@ import h5py
 import numpy as np
 
 # # Open your HDF5 file
-with h5py.File('filtered_graspnet_data.h5', 'r') as file:
-    # List all groups
-    print("Keys: %s" % file.keys())
-    a_group_key = list(file.keys())[1]
 
-    # Get the data
-    data = list(file[a_group_key])
-    print(data)
-    print(len(file.keys()))
-    # If you know the specific path to your dataset, you can directly read
-    # Example: file['group/subgroup/dataset']
-    # dataset = file['time_data_after_0']
-    # # with open('visualize.txt', "a") as text_file:
-    # #         # Write the information to the file
-    # #         text_file.write(f'{file.keys()}')
-    # print((np.array(dataset)))
+with h5py.File('graspnet9_data_ring_clear.h5', 'r') as file:
+    # List all keys in the file to understand the structure
+    keys = list(file.keys())
+    print("Keys:", keys)
+    
+    # Example of how to properly access a dataset and handle data
+    dataset_name = 'X_WG1_rot_1011'  # Make sure this dataset exists in your file
+    if dataset_name in file:
+        dataset = file[dataset_name]
+        data_array = np.array(dataset)  # Convert the dataset to a numpy array for easier handling
+        print(data_array) 
 
-# # Initialize a list to keep track of dataset identifiers where the result is 1
+# import h5py
+# import numpy as np
 
-# result_ids_with_1 = []
+# # Replace with your actual file path
+# file_path = 'transformer_test.h5'
 
-# # Open the original HDF5 file to inspect the 'result_x' datasets
-# with h5py.File('graspnet_data.h5', 'r') as file:
-#     # Iterate over datasets starting with 'result_'
-#     for name in file:
-#         if name.startswith('result_'):
-#             # Read the dataset
-#             result_data = file[name][...]
+# # Define the range of indices to check
+# start_index = 0  # Start from the beginning or the smallest index you expect
+# end_index = 224  # Replace with the maximum index you expect
+
+# # Open the HDF5 file in read/write mode
+# with h5py.File(file_path, 'r+') as hf:
+#     for idx in range(start_index, end_index + 1):
+#         # Construct the dataset name for the current index
+#         current_key = f'traj_data_{idx}'
+        
+#         # Check if the current dataset exists
+#         if current_key not in hf:
+#             # Find the previous dataset that exists
+#             prev_idx = idx - 1
+#             while f'traj_data_{prev_idx}' not in hf and prev_idx >= start_index:
+#                 prev_idx -= 1
             
-#             # Check if the result data contains 1
-#             if 1 in result_data:
-#                 # Extract and keep the identifier for datasets where the result is 1
-#                 identifier = name.split('_')[-1]
-#                 if identifier != 327:
-#                     result_ids_with_1.append(identifier)
+#             # Check if a valid previous dataset was found
+#             if prev_idx >= start_index:
+#                 # Copy all related datasets for the current index from the previous index
+#                 for suffix in ['traj_data', 'pc_data', 'time_data', 'traj_data_after', 
+#                                'time_data_after', 'X_WG1', 'X_WG2', 'obj_catch_t', 
+#                                'result', 'obj_pose_at_catch']:
+#                     src_key = f'{suffix}_{prev_idx}'
+#                     dest_key = f'{suffix}_{idx}'
+                    
+#                     # Copy the dataset
+#                     hf.copy(src_key, dest_key)
+#                     print(f"Copied data from {src_key} to {dest_key}")
+#             else:
+#                 print(f"No valid previous dataset found for index {idx}")
 
-# # Open a new HDF5 file to save the filtered data
-# with h5py.File('filtered_graspnet_data.h5', 'w') as filtered_file:
-#     # Re-open the original file to copy the necessary data
-#     with h5py.File('graspnet_data.h5', 'r') as original_file:
-#         # Sort the result identifiers to maintain the order
-#         sorted_identifiers = sorted(result_ids_with_1, key=int)
-#         # Iterate over the result identifiers we kept earlier, reindexing as we go
-#         for new_index, identifier in enumerate(sorted_identifiers):
-#             # Construct the new dataset names with the new index
-#             new_traj_data_name = f'traj_data_{new_index}'
-#             new_pc_data_name = f'pc_data_{new_index}'
-#             new_time_data_name = f'time_data_{new_index}'
-#             new_X_WG1_name = f'X_WG1_{new_index}'
-#             new_X_WG2_name = f'X_WG2_{new_index}'
-#             new_obj_catch_t_name = f'obj_catch_t_{new_index}'
-#             new_result_name = f'result_{new_index}'
-            
-#             # Original dataset names
-#             traj_data_name = f'traj_data_{identifier}'
-#             pc_data_name = f'pc_data_{identifier}'
-#             time_data_name = f'time_data_{identifier}'
-#             X_WG1_name = f'X_WG1_{identifier}'
-#             X_WG2_name = f'X_WG2_{identifier}'
-#             obj_catch_t_name = f'obj_catch_t_{identifier}'
-#             result_name = f'result_{identifier}'
-            
-#             # Check and copy each dataset to the new file with reindexed names
-#             if traj_data_name in original_file:
-#                 filtered_file.create_dataset(new_traj_data_name, data=original_file[traj_data_name][...])
-#                 filtered_file.create_dataset(new_pc_data_name, data=original_file[pc_data_name][...])
-#                 filtered_file.create_dataset(new_time_data_name, data=original_file[time_data_name][...])
-#                 filtered_file.create_dataset(new_X_WG1_name, data=original_file[X_WG1_name][...])
-#                 filtered_file.create_dataset(new_X_WG2_name, data=original_file[X_WG2_name][...])
-#                 filtered_file.create_dataset(new_obj_catch_t_name, data=original_file[obj_catch_t_name][...])
-#                 filtered_file.create_dataset(new_result_name, data=original_file[result_name][...])

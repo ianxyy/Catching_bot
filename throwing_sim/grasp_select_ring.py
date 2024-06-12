@@ -49,7 +49,7 @@ class GraspSelector(LeafSystem):
         self.scene_graph = scene_graph
         self.meshcat = meshcat
         self.thrown_model_name = thrown_model_name
-        self.grasp_random_seed = 5 #grasp_random_seed
+        self.grasp_random_seed = grasp_random_seed
         self.iiwa1_pose = iiwa1_pose
         self.iiwa2_pose = iiwa2_pose
 
@@ -74,7 +74,7 @@ class GraspSelector(LeafSystem):
         # gripper2_instance = parser.AddModelsFromUrl(gripper_model_url)[0]
         gripper_model_url = "package://manipulation/schunk_wsg_50_welded_fingers.sdf"
         gripper_model_url2 = "package://manipulation/schunk_wsg_50_welded_fingers_copy.sdf"
-        url = '/home/ece484/Catching_bot/throwing_sim/schunk_wsg_50_welded_fingers2.sdf'
+        url = '/home/haonan/Catching_bot/throwing_sim/schunk_wsg_50_welded_fingers2.sdf'
         gripper1_instance = parser.AddModelsFromUrl(gripper_model_url)[0]
         # gripper2_instance = parser.AddModelsFromUrl(gripper_model_url2)[0]
         gripper2_instance = parser.AddModels(url)[0]
@@ -111,7 +111,7 @@ class GraspSelector(LeafSystem):
         ConfigureParser(parser)
         gripper_model_url = "package://manipulation/schunk_wsg_50_welded_fingers.sdf"
         gripper_model_url2 = "package://manipulation/schunk_wsg_50_welded_fingers_copy.sdf"
-        url = '/home/ece484/Catching_bot/throwing_sim/schunk_wsg_50_welded_fingers2.sdf'
+        url = '/home/haonan/Catching_bot/throwing_sim/schunk_wsg_50_welded_fingers2.sdf'
         gripper1_instance = parser.AddModelsFromUrl(gripper_model_url)[0]
         # gripper2_instance = parser.AddModelsFromUrl(gripper_model_url2)[0]
         gripper2_instance = parser.AddModels(url)[0]
@@ -319,6 +319,8 @@ class GraspSelector(LeafSystem):
             # X_WG_z_axis_vector = (X_WG.rotation().matrix() @ np.array([[0],[0],[1]])).reshape((3,))
             # on the order of 0 - 2
             alignment = 1 - np.dot(obj_direction_at_catch, X_WG_y_axis_vector)  # absolute since it's ok for gripper z-axis to be perfectly against obj velocity
+
+            z_axis_penalty = 0 if X_WG_z_axis_vector[2] > 0 else 1 - X_WG_z_axis_vector[2]
         else:
             # L = 0.9
             # second_pos = [0, 0, L/4]
@@ -357,6 +359,8 @@ class GraspSelector(LeafSystem):
             # X_WG_z_axis_vector = (X_WG.rotation().matrix() @ np.array([[0],[0],[1]])).reshape((3,))
             # on the order of 0 - 2
             alignment = 1 - np.dot(obj_direction_at_catch, X_WG_y_axis_vector)
+
+            z_axis_penalty = 0 if X_WG_z_axis_vector[2] > 0 else 1 - X_WG_z_axis_vector[2]
         # if (alignment < 0.010 and direction < 0.040):
         #     print(f"\nworld_z_axis_to_X_WG_vector: {world_z_axis_to_X_WG_vector}")
         #     print(f"X_WG_y_axis_vector: {X_WG_y_axis_vector}")
@@ -366,12 +370,12 @@ class GraspSelector(LeafSystem):
         #     print(f"alignment: {alignment}\n")
 
         # Weight the different parts of the cost function
-        final_cost = 10*alignment + direction + 5*z_alignment#+ 10*distance_obj_pc_desired_to_X_OG_y_axis
+        final_cost = 10*alignment + direction + 5*z_alignment + 5*z_axis_penalty #+ 10*distance_obj_pc_desired_to_X_OG_y_axis
 
         return final_cost,  direction, alignment
 
 
-    def compute_candidate_grasps(self, obj_pc, obj_pc_centroid, obj_catch_t, candidate_num=500):
+    def compute_candidate_grasps(self, obj_pc, obj_pc_centroid, obj_catch_t, candidate_num=int(np.random.uniform(100,500))):
         """
         Args:
             - obj_pc (PointCloud object): pointcloud of the object.
@@ -503,7 +507,6 @@ class GraspSelector(LeafSystem):
                 # Object is between 420-750mm from iiwa's center in XY plane
                 if obj_dist_from_iiwa1_squared > 0.42**2 and obj_dist_from_iiwa1_squared < 0.75**2 and obj_dist_from_iiwa2_squared > 0.42**2 and obj_dist_from_iiwa2_squared < 0.75**2:
                     self.obj_reachable_start_t = t
-                    print(t)
                     break
             # Backward search to find last time
             for t in search_times[::-1]:
@@ -514,12 +517,13 @@ class GraspSelector(LeafSystem):
                 # Object is between 420-750mm from iiwa's center in XY plane
                 if obj_dist_from_iiwa1_squared > 0.42**2 and obj_dist_from_iiwa1_squared < 0.75**2 and obj_dist_from_iiwa2_squared > 0.42**2 and obj_dist_from_iiwa2_squared < 0.75**2:
                     self.obj_reachable_end_t = t
-                    print(t)
                     break
 
             # For now, all grasps will happen at 0.475 of when obj is in iiwa's work envelope
-            obj_catch_t = 0.36*(self.obj_reachable_start_t + self.obj_reachable_end_t)  #0.365 0.4, 0.45
-            print(obj_catch_t)
+            obj_catch_t = np.random.uniform(self.obj_reachable_start_t, self.obj_reachable_end_t) #0.7
+            print(f'obj_reachable_start_t:{self.obj_reachable_start_t}')
+            print(f'obj_reachable_end_t:{self.obj_reachable_end_t}')
+            print(f'obj_catch_t:{obj_catch_t}')
 
             self.obj_pose_at_catch = self.obj_traj.value(obj_catch_t)
             print(f'obj_pose{self.obj_pose_at_catch}')

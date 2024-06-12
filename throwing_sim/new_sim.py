@@ -25,7 +25,7 @@ import typing
 import matplotlib.pyplot as plt
 import numpy as np
 import gc
-from manipulation.scenarios import AddIiwa
+# from manipulation.scenarios import AddIiwa
 from pydrake.systems.primitives import Demultiplexer
 from pydrake.all import (
     RigidTransform, 
@@ -92,7 +92,7 @@ from perception_mit import PointCloudGenerator, TrajectoryPredictor, add_cameras
 # from grasp_select_ring import GraspSelector
 from grasp_select_bar import GraspSelector
 from motion_planner import MotionPlanner
-from graspnet_data import GraspPredictor
+from graspnet_data import GraspPredictor, SpecificBodyPoseExtractor
 
 @dc.dataclass
 class Scenario:
@@ -260,6 +260,10 @@ def run(*, scenario, graphviz=None, meshcat):
         directives=ModelDirectives(directives=scenario.directives),
         plant=sim_plant)
 
+    #Random seed 
+    grasp_random_seed = np.random.randint(0, 100000)
+    np.random.seed(grasp_random_seed)
+    
     #thrown model
     obj_name = 'noodle' #noodle ring
     #thrown velocity
@@ -333,9 +337,7 @@ def run(*, scenario, graphviz=None, meshcat):
     elif obj_name == 'noodle':
         launching_position, launching_orientation, initial_pose = generate_random_initial_pose()
 
-    #Random seed 
-    grasp_random_seed = np.random.randint(0, 10000)
-    np.random.seed(grasp_random_seed)
+    
         
     #iiwa_1
     model_instance_iiwa_1 = sim_plant.GetModelInstanceByName('iiwa')
@@ -513,11 +515,18 @@ def run(*, scenario, graphviz=None, meshcat):
     builder.Connect(iiwa_2_controller.GetOutputPort("generalized_force"), sim_plant.get_actuation_input_port(model_instance_iiwa_2))
 
     #add grasp net
-    grasp_net = builder.AddSystem(GraspPredictor(sim_plant, scene_graph, obj_name, grasp_random_seed, velocity, roll, launching_position, launching_orientation, meshcat))
+    grasp_net = builder.AddSystem(GraspPredictor(sim_plant, scene_graph, obj_name, grasp_random_seed, velocity, roll, launching_position, launching_orientation, initial_pose, meshcat))
     builder.Connect(traj_pred_system.GetOutputPort("object_trajectory"), grasp_net.GetInputPort("object_trajectory"))
     builder.Connect(traj_pred_system.GetOutputPort("realtime_point_cloud"), grasp_net.GetInputPort("object_pc"))
+    # builder.Connect(obj_point_cloud_system.GetOutputPort("point_cloud"), grasp_net.GetInputPort("object_pc"))
     builder.Connect(grasp_selector.GetOutputPort("grasp_selection"), grasp_net.GetInputPort("grasp_selection"))
     builder.Connect(sim_plant.get_contact_results_output_port(), grasp_net.GetInputPort("contact_results_input"))
+
+    #Retrieve Noodle State
+    body_poses_output_port = sim_plant.get_body_poses_output_port()
+    state = builder.AddSystem(SpecificBodyPoseExtractor(sim_plant, body_poses_output_port))
+    builder.Connect(body_poses_output_port, state.GetInputPort('body_poses'))
+    builder.Connect(state.GetOutputPort('noodle_pose'), grasp_net.GetInputPort('noodle_state'))
 
     # Add visualization.
     ApplyVisualizationConfig(scenario.visualization, builder, lcm_buses)
@@ -554,7 +563,7 @@ def run(*, scenario, graphviz=None, meshcat):
     launch_obj(sim_plant, plant_context, initial_pose, velocity, roll, pitch, yaw, obj_name)#angle, roll, pitch, yaw)
       
     simulator.AdvanceTo(1.0)
-    meshcat.Delete('/')
+
 
 
 def main():

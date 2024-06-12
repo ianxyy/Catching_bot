@@ -39,7 +39,7 @@ class GraspSelector(LeafSystem):
 
         port = self.DeclareAbstractOutputPort(
             "grasp_selection",
-            lambda: AbstractValue.Make({'gripper1': (RigidTransform(), 0), 'gripper2': (RigidTransform(), 0)}),  # dict mapping grasp to a grasp time
+            lambda: AbstractValue.Make({'gripper1': (RigidTransform(), 0), 'gripper2': (RigidTransform(), 0), 'gripper1_pc':(RigidTransform(), 0), 'gripper2_pc':(RigidTransform(), 0), 'index1': (0), 'index2': (0)}),  # dict mapping grasp to a grasp time
             self.SelectGrasp,
         )
         port.disable_caching_by_default()
@@ -59,6 +59,11 @@ class GraspSelector(LeafSystem):
         self.obj_catch_t = None
         self.visualize = True
 
+        self.index_1 = None
+        self.index_2 = None
+        self.point_1 = None
+        self.point_2 = None
+
 
     def draw_grasp_candidate(self, X_G1, X_G2, prefix="gripper", random_transform=True):
         """
@@ -74,7 +79,7 @@ class GraspSelector(LeafSystem):
         # gripper2_instance = parser.AddModelsFromUrl(gripper_model_url)[0]
         gripper_model_url = "package://manipulation/schunk_wsg_50_welded_fingers.sdf"
         gripper_model_url2 = "package://manipulation/schunk_wsg_50_welded_fingers_copy.sdf"
-        url = '/home/ece484/Catching_bot/throwing_sim/schunk_wsg_50_welded_fingers2.sdf'
+        url = '/home/haonan/Catching_bot/throwing_sim/schunk_wsg_50_welded_fingers2.sdf'
         gripper1_instance = parser.AddModelsFromUrl(gripper_model_url)[0]
         # gripper2_instance = parser.AddModelsFromUrl(gripper_model_url2)[0]
         gripper2_instance = parser.AddModels(url)[0]
@@ -111,7 +116,7 @@ class GraspSelector(LeafSystem):
         ConfigureParser(parser)
         gripper_model_url = "package://manipulation/schunk_wsg_50_welded_fingers.sdf"
         gripper_model_url2 = "package://manipulation/schunk_wsg_50_welded_fingers_copy.sdf"
-        url = '/home/ece484/Catching_bot/throwing_sim/schunk_wsg_50_welded_fingers2.sdf'
+        url = '/home/haonan/Catching_bot/throwing_sim/schunk_wsg_50_welded_fingers2.sdf'
         gripper1_instance = parser.AddModelsFromUrl(gripper_model_url)[0]
         # gripper2_instance = parser.AddModelsFromUrl(gripper_model_url2)[0]
         gripper2_instance = parser.AddModels(url)[0]
@@ -256,18 +261,18 @@ class GraspSelector(LeafSystem):
             obj_pc_G2.mutable_xyzs()[:] = obj_pc_G2_np
 
             self.draw_grasp_candidate(RigidTransform())
-            self.meshcat.SetObject("cloud1", obj_pc_G1)
-            self.meshcat.SetObject("cloud2", obj_pc_G2)
+            # self.meshcat.SetObject("cloud1", obj_pc_G1)
+            # self.meshcat.SetObject("cloud2", obj_pc_G2)
 
             box_length = np.array(crop_max) - np.array(crop_min)
             box_center = (np.array(crop_max) + np.array(crop_min)) / 2.0
             # box_center_world = X_WG1.multiply(box_center)  # For gripper 1's closing region ??
-            self.meshcat.SetObject(
-                "closing_region",
-                Box(box_length[0], box_length[1], box_length[2]),
-                Rgba(1, 0, 0, 0.3),
-            )
-            self.meshcat.SetTransform("closing_region", RigidTransform(box_center))
+            # self.meshcat.SetObject(
+            #     "closing_region",
+            #     Box(box_length[0], box_length[1], box_length[2]),
+            #     Rgba(1, 0, 0, 0.3),
+            # )
+            # self.meshcat.SetTransform("closing_region", RigidTransform(box_center))
 
         return is_nonempty1 and is_nonempty2
     
@@ -408,8 +413,8 @@ class GraspSelector(LeafSystem):
             if (self.check_collision(obj_pc, new_X_OG_1, new_X_OG_2) is not True) and self.check_nonempty(obj_pc, new_X_OG_1, new_X_OG_2):  # no collision, and there is an object between fingers
                 with candidate_lst_lock:
                     # print('adding candidate')
-                    candidate_lst_1[new_X_OG_1] = new_X_OG_cost_1
-                    candidate_lst_2[new_X_OG_2] = new_X_OG_cost_2
+                    candidate_lst_1[new_X_OG_1] = new_X_OG_cost_1, index_1
+                    candidate_lst_2[new_X_OG_2] = new_X_OG_cost_2, index_2
 
         import threading
 
@@ -449,6 +454,7 @@ class GraspSelector(LeafSystem):
     def SelectGrasp(self, context, output):
         if self.selected_grasp1_obj_frame is None and self.selected_grasp2_obj_frame is None:
             self.obj_pc = self.get_input_port(0).Eval(context).VoxelizedDownSample(voxel_size=0.0025)
+            print('pc_shape:',self.obj_pc.xyzs().shape)
             self.obj_pc.EstimateNormals(0.05, 30)  # allows us to use obj_pc.normals() function later
             self.obj_traj = self.get_input_port(1).Eval(context)
 
@@ -540,14 +546,16 @@ class GraspSelector(LeafSystem):
             #         self.draw_grasp_candidate(grasp, prefix="gripper_2 " + str(time.time()))
             for (grasp1, grasp_cost1), (grasp2, grasp_cost2) in zip(grasp_candidates_gripper1.items(), grasp_candidates_gripper2.items()):
                 # Update the minimum cost and associated grasp for gripper 1
-                if grasp_cost1 < min_cost_1:
-                    min_cost_1 = grasp_cost1
+                if grasp_cost1[0] < min_cost_1:
+                    min_cost_1 = grasp_cost1[0]
                     min_cost_grasp_1 = grasp1
+                    self.index_1 = grasp_cost1[1]
 
                 # Update the minimum cost and associated grasp for gripper 2
-                if grasp_cost2 < min_cost_2:
-                    min_cost_2 = grasp_cost2
+                if grasp_cost2[0] < min_cost_2:
+                    min_cost_2 = grasp_cost2[0]
                     min_cost_grasp_2 = grasp2
+                    self.index_2 = grasp_cost2[1]
 
                 # Draw all grasp candidates for both grippers
                 # if self.visualize:
@@ -563,7 +571,7 @@ class GraspSelector(LeafSystem):
             # draw best grasp gripper position in world
             if (self.visualize):
             #     print(self.obj_pose_at_catch)
-                self.draw_grasp_candidate(min_cost_grasp_1_W, min_cost_grasp_2_W, prefix="grippers_best", random_transform=False)
+                # self.draw_grasp_candidate(min_cost_grasp_1_W, min_cost_grasp_2_W, prefix="grippers_best", random_transform=False)
                 self.draw_grasp_candidate(min_cost_grasp_1, min_cost_grasp_2, prefix="grippers_best1", random_transform=False)
                 # self.draw_grasp_candidate(min_cost_grasp_2_W, prefix="gripper_best_2", random_transform=False)
                 # model_instance_index = self.plant.GetModelInstanceByName('wsg')
@@ -573,9 +581,11 @@ class GraspSelector(LeafSystem):
                 # X_WB = self.plant.EvalBodyPoseInWorld(context, body)
                 # AddMeshcatTriad(self.meshcat, "goal", X_PT=X_WB, opacity=0.5)
                 # self.meshcat.SetTransform("goal", X_WB)
-
-
-            output.set_value({'gripper1': (min_cost_grasp_1_W, obj_catch_t), 'gripper2': (min_cost_grasp_2_W, obj_catch_t)})
+            if self.index_1 != None:
+                points = self.obj_pc.xyzs()
+                self.point_1 = points[:, self.index_1]
+                self.point_2 = points[:, self.index_2]
+            output.set_value({'gripper1': (min_cost_grasp_1_W, obj_catch_t), 'gripper2': (min_cost_grasp_2_W, obj_catch_t), 'gripper1_pc': (min_cost_grasp_1), 'gripper2_pc': (min_cost_grasp_2), 'index1': (self.index_1), 'index2': (self.index_2)})
             
             # Update class attributes so that next time grasp is not re-selected
             self.selected_grasp1_obj_frame = min_cost_grasp_1
@@ -587,11 +597,12 @@ class GraspSelector(LeafSystem):
 
             # Allow the estimated catch pose to vary in translation, not rotation, since rotation has so much noise that traj opt will fail
             estimated_obj_catch_pose = RigidTransform(self.obj_pose_at_catch.rotation(), self.obj_traj.value(self.obj_catch_t).translation())
-            self.meshcat.SetObject(f"Predobj2", Cylinder(0.02159, 0.9144), Rgba(0,0,1, 1))
-            self.meshcat.SetTransform(f"Predobj2", self.obj_traj.value(self.obj_catch_t))
+            if (self.visualize):
+                self.meshcat.SetObject(f"Predobj2", Cylinder(0.02159, 0.9144), Rgba(0,0,1, 1))
+                self.meshcat.SetTransform(f"Predobj2", self.obj_traj.value(self.obj_catch_t))
             # Shift selected grasp slightly if object's predicted location at catch time has changed
             selected_grasp1_world_frame = estimated_obj_catch_pose @ self.selected_grasp1_obj_frame
             selected_grasp2_world_frame = estimated_obj_catch_pose @ self.selected_grasp2_obj_frame
             self.draw_grasp_candidate(selected_grasp1_world_frame, selected_grasp2_world_frame, prefix="grippers_best", random_transform=False)
             # print(f'time:{context.get_time()}, gripper1: {selected_grasp1_world_frame}, gripper2: {selected_grasp2_world_frame}')
-            output.set_value({'gripper1': (selected_grasp1_world_frame, self.obj_catch_t), 'gripper2': (selected_grasp2_world_frame, self.obj_catch_t)})
+            output.set_value({'gripper1': (selected_grasp1_world_frame, self.obj_catch_t), 'gripper2': (selected_grasp2_world_frame, self.obj_catch_t), 'gripper1_pc': (self.selected_grasp1_obj_frame), 'gripper2_pc': (self.selected_grasp2_obj_frame), 'index1': (self.index_1), 'index2': (self.index_2)})
