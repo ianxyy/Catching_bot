@@ -92,8 +92,9 @@ from perception_mit_ring import PointCloudGenerator, TrajectoryPredictor, add_ca
 # from grasp_select_ring import GraspSelector
 from grasp_select_bar import GraspSelector
 from motion_planner import MotionPlanner
-# from graspnet_data_test import GraspPredictor
-from graspnet_data_test_ring import GraspPredictor
+# from graspnet_data_aba_test import GraspPredictor
+from graspnet_data_test import GraspPredictor
+# from graspnet_data_test_ring import GraspPredictor
 from log_testresults import Log
 
 
@@ -274,7 +275,7 @@ def run(*, scenario, graphviz=None, meshcat):
     np.random.seed(grasp_random_seed)
 
     #thrown model
-    obj_name = 'ring' #noodle ring cuboid
+    obj_name = 'noodle' #noodle ring cuboid
     #thrown velocity
     velocity = np.random.uniform(low=5.0, high=6.0)
     print(f'velcocity:{velocity}')

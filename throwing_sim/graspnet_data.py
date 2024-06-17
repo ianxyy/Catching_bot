@@ -28,7 +28,7 @@ import torch
 from torch_geometric.data import Data, Batch
 from scipy.spatial import cKDTree as KDTree
 
-from graspnet import PointNetPlusPlus, TrajTransformer, PredictionMLP
+from graspnet_11 import PointNetPlusPlus, TrajTransformer, PredictionMLP
 
 
 class SpecificBodyPoseExtractor(LeafSystem):

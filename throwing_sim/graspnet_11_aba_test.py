@@ -659,21 +659,21 @@ def test(pointnet_model, transformer_model, mlp_model):
     test_dataset = GraspDataset('data/graspnet9_data_5pc_matrix.h5', 'test')
     test_loader = DataLoader(test_dataset, batch_size=1, shuffle=False)
 
-    pointnet_model.load_state_dict(torch.load('model/XW_matrix/pointnet_model_weights.pth', map_location=torch.device('cuda')))
-    transformer_model.load_state_dict(torch.load('model/XW_matrix/transformer_model_weights.pth', map_location=torch.device('cuda')))
-    mlp_model.load_state_dict(torch.load('model/XW_matrix/mlp_model_weights.pth', map_location=torch.device('cuda')))
+    pointnet_model.load_state_dict(torch.load('model/XW_test/pointnet_model_weights.pth', map_location=torch.device('cuda')))
+    transformer_model.load_state_dict(torch.load('model/XW_test/transformer_model_weights.pth', map_location=torch.device('cuda')))
+    mlp_model.load_state_dict(torch.load('model/XW_test/mlp_model_weights.pth', map_location=torch.device('cuda')))
 
     pointnet_model.eval()
     transformer_model.eval()
     mlp_model.eval()  # Evaluation mode    
 
-    traj_pos_scaler_path = 'model/XW_matrix/traj_pos_scaler.joblib'
-    traj_vel_scaler_path = 'model/XW_matrix/traj_vel_scaler.joblib'
-    pc_scaler_path = 'model/XW_matrix/pc_scaler.joblib'
-    X_WG1_scaler_path = 'model/XW_matrix/X_WG1_scaler.joblib'
-    X_WG2_scaler_path = 'model/XW_matrix/X_WG2_scaler.joblib'
-    X_OG1_scaler_path = 'model/XW_matrix/X_OG1_scaler.joblib'
-    X_OG2_scaler_path = 'model/XW_matrix/X_OG2_scaler.joblib'
+    traj_pos_scaler_path = 'model/XW_test/traj_pos_scaler.joblib'
+    traj_vel_scaler_path = 'model/XW_test/traj_vel_scaler.joblib'
+    pc_scaler_path = 'model/XW_test/pc_scaler.joblib'
+    X_WG1_scaler_path = 'model/XW_test/X_WG1_scaler.joblib'
+    X_WG2_scaler_path = 'model/XW_test/X_WG2_scaler.joblib'
+    X_OG1_scaler_path = 'model/XW_test/X_OG1_scaler.joblib'
+    X_OG2_scaler_path = 'model/XW_test/X_OG2_scaler.joblib'
 
 
     traj_pos_scaler = load(traj_pos_scaler_path)
@@ -838,74 +838,74 @@ class EarlyStopping:
             self.counter = 0
 
 if __name__ == '__main__':
-    print(torch.__version__)
-    print(torch.version.cuda)
-    dataset = GraspDataset('data/graspnet9_data_5pc_matrix.h5', limit=None)
-    batch_size = 8
-    dataloader = DataLoader(dataset, batch_size, shuffle=True)
-    train_dataset, val_dataset = split_dataset(dataset, train_ratio=0.8)
-    train_loader = DataLoader(train_dataset, batch_size, shuffle=True)
-    val_loader = DataLoader(val_dataset, batch_size, shuffle=False)
+#     print(torch.__version__)
+#     print(torch.version.cuda)
+#     dataset = GraspDataset('data/graspnet9_data_5pc_matrix.h5', limit=None)
+#     batch_size = 8
+#     dataloader = DataLoader(dataset, batch_size, shuffle=True)
+#     train_dataset, val_dataset = split_dataset(dataset, train_ratio=0.8)
+#     train_loader = DataLoader(train_dataset, batch_size, shuffle=True)
+#     val_loader = DataLoader(val_dataset, batch_size, shuffle=False)
 
-    pointnet_model = PointNetPlusPlus()
-    transformer_model = TrajTransformer(feature_size = 12, nhead = 4, num_encoder_layers = 3, num_decoder_layers = 3, dim_feedforward = 1024, max_seq_length = 16)
-    # transformer_model = TrajTransformer(feature_size = 12, nhead = 4, num_encoder_layers = 4, num_decoder_layers = 4, dim_feedforward = 2048, max_seq_length = 16)
-    # transformer_model = TrajTransformer(feature_size = 20, nhead = 4, num_encoder_layers = 3, num_decoder_layers = 3, dim_feedforward = 1024, max_seq_length = 16)
-    mlp_model = PredictionMLP(input_size = (128+128), hidden_sizes = [512, 256, 128])
+#     pointnet_model = PointNetPlusPlus()
+#     transformer_model = TrajTransformer(feature_size = 12, nhead = 4, num_encoder_layers = 3, num_decoder_layers = 3, dim_feedforward = 1024, max_seq_length = 16)
+#     # transformer_model = TrajTransformer(feature_size = 12, nhead = 4, num_encoder_layers = 4, num_decoder_layers = 4, dim_feedforward = 2048, max_seq_length = 16)
+#     # transformer_model = TrajTransformer(feature_size = 20, nhead = 4, num_encoder_layers = 3, num_decoder_layers = 3, dim_feedforward = 1024, max_seq_length = 16)
+#     mlp_model = PredictionMLP(input_size = (128+128), hidden_sizes = [512, 256, 128])
 
-    device = 'cuda' if torch.cuda.is_available() else 'cpu'
-    print(device)
-    pointnet_model = pointnet_model.to(device)
-    transformer_model = transformer_model.to(device)
-    mlp_model = mlp_model.to(device)
+#     device = 'cuda' if torch.cuda.is_available() else 'cpu'
+#     print(device)
+#     pointnet_model = pointnet_model.to(device)
+#     transformer_model = transformer_model.to(device)
+#     mlp_model = mlp_model.to(device)
 
-    optimizer = optim.Adam(
-    list(pointnet_model.parameters()) + 
-    list(transformer_model.parameters()) + 
-    list(mlp_model.parameters()), 
-    lr=0.0003, 
-    betas=(0.9, 0.999)
-)
-    criterion = nn.MSELoss()
-    number_of_epoch = 300
-    train_losses = []
-    val_losses = []
-    early_stopping = EarlyStopping(patience=30, min_delta=0)
-    for epoch in range(number_of_epoch):
-        train_loss, train_losses = train(pointnet_model, transformer_model, mlp_model, optimizer, criterion, train_loader, batch_size)
-        val_loss, val_losses = val(pointnet_model, transformer_model, mlp_model, val_loader)
-        early_stopping(val_loss)
-        if early_stopping.early_stop:
-            print(f"Stopping early at epoch {epoch+1}")
-            break
+#     optimizer = optim.Adam(
+#     list(pointnet_model.parameters()) + 
+#     list(transformer_model.parameters()) + 
+#     list(mlp_model.parameters()), 
+#     lr=0.0003, 
+#     betas=(0.9, 0.999)
+# )
+#     criterion = nn.MSELoss()
+#     number_of_epoch = 300
+#     train_losses = []
+#     val_losses = []
+#     early_stopping = EarlyStopping(patience=30, min_delta=0)
+#     for epoch in range(number_of_epoch):
+#         train_loss, train_losses = train(pointnet_model, transformer_model, mlp_model, optimizer, criterion, train_loader, batch_size)
+#         val_loss, val_losses = val(pointnet_model, transformer_model, mlp_model, val_loader)
+#         early_stopping(val_loss)
+#         if early_stopping.early_stop:
+#             print(f"Stopping early at epoch {epoch+1}")
+#             break
 
-        print(f'Epoch {epoch+1}: Training Loss = {train_loss:.4f}, Validation Loss = {val_loss:.4f}')
+#         print(f'Epoch {epoch+1}: Training Loss = {train_loss:.4f}, Validation Loss = {val_loss:.4f}')
 
-    torch.save(pointnet_model.state_dict(), '/home/haonan/Catching_bot/throwing_sim/model/XW_test/pointnet_model_weights.pth')
-    torch.save(transformer_model.state_dict(), '/home/haonan/Catching_bot/throwing_sim/model/XW_test/transformer_model_weights.pth')
-    torch.save(mlp_model.state_dict(), '/home/haonan/Catching_bot/throwing_sim/model/XW_test/mlp_model_weights.pth')
+#     torch.save(pointnet_model.state_dict(), '/home/haonan/Catching_bot/throwing_sim/model/XW_test/pointnet_model_weights.pth')
+#     torch.save(transformer_model.state_dict(), '/home/haonan/Catching_bot/throwing_sim/model/XW_test/transformer_model_weights.pth')
+#     torch.save(mlp_model.state_dict(), '/home/haonan/Catching_bot/throwing_sim/model/XW_test/mlp_model_weights.pth')
 
-    plt.figure(figsize=(10, 6))
-    plt.plot(train_losses, label='Training Loss')
-    plt.plot(val_losses, label='Validation Loss')
-    plt.title('Training and Validation Losses')
-    plt.xlabel('Epochs')
-    plt.ylabel('Loss')
-    plt.legend()
-    # plt.show()
-    plt.savefig('orig_noodle_training_validation_losses.png')
+#     plt.figure(figsize=(10, 6))
+#     plt.plot(train_losses, label='Training Loss')
+#     plt.plot(val_losses, label='Validation Loss')
+#     plt.title('Training and Validation Losses')
+#     plt.xlabel('Epochs')
+#     plt.ylabel('Loss')
+#     plt.legend()
+#     # plt.show()
+#     plt.savefig('noodle_training_validation_losses.png')
 
 
     #uncomment below for test
-    # pointnet_model = PointNetPlusPlus()
-    # # transformer_model = TrajTransformer(feature_size = 20, nhead = 4, num_encoder_layers = 3, num_decoder_layers = 3, dim_feedforward = 1024, max_seq_length = 16)
-    # transformer_model = TrajTransformer(feature_size = 12, nhead = 4, num_encoder_layers = 3, num_decoder_layers = 3, dim_feedforward = 1024, max_seq_length = 16)
-    # mlp_model = PredictionMLP(input_size = (128+128), hidden_sizes = [512, 256, 128])
-    # # mlp_model = PredictionMLP(input_size = (1024+16*20), hidden_sizes = [512, 256, 128])
+    pointnet_model = PointNetPlusPlus()
+    # transformer_model = TrajTransformer(feature_size = 20, nhead = 4, num_encoder_layers = 3, num_decoder_layers = 3, dim_feedforward = 1024, max_seq_length = 16)
+    transformer_model = TrajTransformer(feature_size = 12, nhead = 4, num_encoder_layers = 3, num_decoder_layers = 3, dim_feedforward = 1024, max_seq_length = 16)
+    mlp_model = PredictionMLP(input_size = (128+128), hidden_sizes = [512, 256, 128])
+    # mlp_model = PredictionMLP(input_size = (1024+16*20), hidden_sizes = [512, 256, 128])
 
-    # device = 'cuda' if torch.cuda.is_available() else 'cpu'
-    # pointnet_model = pointnet_model.to(device)
-    # transformer_model = transformer_model.to(device)
-    # mlp_model = mlp_model.to(device)
-    # test(pointnet_model, transformer_model, mlp_model)
+    device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    pointnet_model = pointnet_model.to(device)
+    transformer_model = transformer_model.to(device)
+    mlp_model = mlp_model.to(device)
+    test(pointnet_model, transformer_model, mlp_model)
     

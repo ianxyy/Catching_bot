@@ -90,6 +90,6 @@ class Log(LeafSystem):
             self.write = False
             result = 1 if self.check_success(context) else 0
             # with open('results_grasp_1_weightedangle_loss.txt', "a") as text_file:
-            with open('results_ring_elliptical.txt', "a") as text_file:
+            with open('orig_second_test.txt', "a") as text_file:
                 # Write the information to the file
                 text_file.write(f"Object: {self.model_name}, Seed: {self.grasp_random_seed}, Result: {result}, vel: {self.velocity}, roll:{self.roll}, pos:{self.launching_position}, ori:{self.launching_orientation}\n")

@@ -32,7 +32,7 @@ from scipy.spatial import cKDTree as KDTree
 from torch_geometric.data import Data, Batch
 
 # from graspnet_11_ring import PointNetPlusPlus, TrajTransformer, PredictionMLP, SinusoidalTimeEmbedding
-from graspnet_11 import PointNetPlusPlus, TrajTransformer, PredictionMLP, SinusoidalTimeEmbedding
+from graspnet_11_aba_test import PointNetPlusPlus, TrajTransformer, PredictionMLP, SinusoidalTimeEmbedding
 
 
 class GraspPredictor(LeafSystem):
@@ -381,9 +381,9 @@ class GraspPredictor(LeafSystem):
                     mlp_model.to(device)
 
                     # Load the trained weights
-                    pointnet_model.load_state_dict(torch.load('model/XW_test/pointnet_model_weights.pth', map_location=torch.device('cuda')))
-                    transformer_model.load_state_dict(torch.load('model/XW_test/transformer_model_weights.pth', map_location=torch.device('cuda')))
-                    mlp_model.load_state_dict(torch.load('model/XW_test/mlp_model_weights.pth', map_location=torch.device('cuda')))
+                    pointnet_model.load_state_dict(torch.load('model/1pc_test/pointnet_model_weights.pth', map_location=torch.device('cuda')))
+                    transformer_model.load_state_dict(torch.load('model/1pc_test/transformer_model_weights.pth', map_location=torch.device('cuda')))
+                    mlp_model.load_state_dict(torch.load('model/1pc_test/mlp_model_weights.pth', map_location=torch.device('cuda')))
                     # pointnet_model.load_state_dict(torch.load('model/XW_ring_matrix/pointnet_model_weights.pth', map_location=torch.device('cuda')))
                     # transformer_model.load_state_dict(torch.load('model/XW_ring_matrix/transformer_model_weights.pth', map_location=torch.device('cuda')))
                     # mlp_model.load_state_dict(torch.load('model/XW_ring_matrix/mlp_model_weights.pth', map_location=torch.device('cuda')))
@@ -393,11 +393,11 @@ class GraspPredictor(LeafSystem):
                     transformer_model.eval()
                     mlp_model.eval()
 
-                    traj_pos_scaler_path = 'model/XW_test/traj_pos_scaler.joblib'
-                    traj_vel_scaler_path = 'model/XW_test/traj_vel_scaler.joblib'
-                    pc_scaler_path = 'model/XW_test/pc_scaler.joblib'
-                    X_WG1_scaler_path = 'model/XW_test/X_WG1_scaler.joblib'
-                    X_WG2_scaler_path = 'model/XW_test/X_WG2_scaler.joblib'
+                    traj_pos_scaler_path = 'model/1pc_test/traj_pos_scaler.joblib'
+                    traj_vel_scaler_path = 'model/1pc_test/traj_vel_scaler.joblib'
+                    pc_scaler_path = 'model/1pc_test/pc_scaler.joblib'
+                    X_WG1_scaler_path = 'model/1pc_test/X_WG1_scaler.joblib'
+                    X_WG2_scaler_path = 'model/1pc_test/X_WG2_scaler.joblib'
                     # traj_pos_scaler_path = 'model/XW_ring_matrix/traj_pos_scaler.joblib'
                     # traj_vel_scaler_path = 'model/XW_ring_matrix/traj_vel_scaler.joblib'
                     # pc_scaler_path = 'model/XW_ring_matrix/pc_scaler.joblib'
@@ -411,7 +411,8 @@ class GraspPredictor(LeafSystem):
                     X_WG2_scaler = load(X_WG2_scaler_path)
 
                     traj_data = np.array(self.traj_input)[4,:,:]
-                    pc_data = np.array(self.pointcloud_input)
+                    pc_data = np.array(self.pointcloud_input)[4,:,:]
+                    # print(pc_data.shape)
                     time_data = np.array(self.time_input)
                     traj_pos_data = traj_data[ :,0:3]
                     traj_vel_data = traj_data[ :,9:12]
@@ -429,7 +430,7 @@ class GraspPredictor(LeafSystem):
                     pointcloud_input_normalized = pc_scaler.transform(pc_data.reshape(-1, pc_data.shape[-1])).reshape(pc_data.shape)
                     
                     # traj_input_normalized_tensor = torch.tensor(traj_data_with_time, dtype=torch.float32).to('cpu')
-                    pointcloud_input_normalized_tensor = torch.tensor(pointcloud_input_normalized, dtype=torch.float32).to(device)
+                    pointcloud_input_normalized_tensor = torch.tensor(pointcloud_input_normalized, dtype=torch.float32).to(device).view(1,1024,3)
                     # pointcloud_input_normalized_tensor = pointcloud_input_normalized_tensor.unsqueeze(0)  # Add batch dimension
                     
                     # print('shape', pc_data.shape)
@@ -453,7 +454,7 @@ class GraspPredictor(LeafSystem):
                     # print(f'transformer_size:{transformer_out.size()}')
                     transformer_output_agg_flat = transformer_out.view(150,1,128).transpose(0, 1).mean(dim=1)
 
-                    pointnet_out_agg = pointnet_out.view(batch_size, 5, 128).mean(dim=1)  # Mean pooling over the 5 dimension [batch_size, 1024]
+                    pointnet_out_agg = pointnet_out.view(batch_size, 1, 128).mean(dim=1)  # Mean pooling over the 5 dimension [batch_size, 1024]
                     # transformer_output_agg = transformer_out.view(16, 150, batch_size, 12).mean(dim=1)  # Mean pooling over the 150 dimension [16, batch_size, 16]
                     # transformer_output_agg_flat = transformer_output_agg.transpose(0, 1).reshape(batch_size, -1)  # [batch_size, 16*16]
                     combined_features = torch.cat((pointnet_out_agg, transformer_output_agg_flat), dim=1)

@@ -424,7 +424,7 @@ class GraspSelector(LeafSystem):
         direction_axis = np.array([0,0,1]) #self.obj_pose_at_catch.rotation().matrix()[:,2] #self.obj_traj.value(0).rotation().matrix()[:,2] #find obj current pose's y-axis (in world frame)
         # print(self.obj_traj.value(0).rotation().matrix())
         # print(self.obj_traj.value(0.3).rotation().matrix())
-        for _ in range(candidate_num):
+        for _ in range(500):
             random_idx = np.random.randint(0, obj_pc.size())
             random_center = points[:,random_idx]
             t = threading.Thread(target=compute_candidate, args=(random_center,

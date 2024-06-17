@@ -64,7 +64,7 @@ class GraspDataset(Dataset):
                 traj_vel_data = hf[f'traj_data_{i}'][:,9:12]
                 # traj_pos_data_after = hf[f'traj_data_after_{i}'][:,:,0:3]
                 # traj_vel_data_after = hf[f'traj_data_after_{i}'][:,:,9:12]
-                pc_data = hf[f'pc_data_{i}'][:]
+                pc_data = hf[f'pc_data_{i}'][4]
                 # time_data = hf[f'time_data_{i}'][:]
                 X_WG1_data = hf[f'X_WG1_tran_{i}']
                 X_WG2_data = hf[f'X_WG2_tran_{i}']
@@ -104,15 +104,15 @@ class GraspDataset(Dataset):
             self.X_OG2_pos_scaler.fit(all_X_OG2_data)
 
             # Save scaler 
-            dump(self.traj_pos_scaler, 'model/XW_test/traj_pos_scaler.joblib')
-            dump(self.traj_vel_scaler, 'model/XW_test/traj_vel_scaler.joblib')
+            dump(self.traj_pos_scaler, 'model/1pc_test/traj_pos_scaler.joblib')
+            dump(self.traj_vel_scaler, 'model/1pc_test/traj_vel_scaler.joblib')
             # dump(self.traj_pos_after_scaler, 'model/traj_pos_after_scaler.joblib')
             # dump(self.traj_vel_after_scaler, 'model/traj_vel_after_scaler.joblib')
-            dump(self.pc_scaler, 'model/XW_test/pc_scaler.joblib')
-            dump(self.X_WG1_pos_scaler, 'model/XW_test/X_WG1_scaler.joblib')
-            dump(self.X_WG2_pos_scaler, 'model/XW_test/X_WG2_scaler.joblib')
-            dump(self.X_OG1_pos_scaler, 'model/XW_test/X_OG1_scaler.joblib')
-            dump(self.X_OG2_pos_scaler, 'model/XW_test/X_OG2_scaler.joblib')
+            dump(self.pc_scaler, 'model/1pc_test/pc_scaler.joblib')
+            dump(self.X_WG1_pos_scaler, 'model/1pc_test/X_WG1_scaler.joblib')
+            dump(self.X_WG2_pos_scaler, 'model/1pc_test/X_WG2_scaler.joblib')
+            dump(self.X_OG1_pos_scaler, 'model/1pc_test/X_OG1_scaler.joblib')
+            dump(self.X_OG2_pos_scaler, 'model/1pc_test/X_OG2_scaler.joblib')
 
     def len(self):
         with h5py.File(self.h5_file, 'r') as hf:
@@ -124,7 +124,7 @@ class GraspDataset(Dataset):
             if self.mode == 'test':
                 # Load data
                 traj_data = hf[f'traj_data_{idx}'][:]
-                pc_data = hf[f'pc_data_{idx}'][:]
+                pc_data = hf[f'pc_data_{idx}'][4]
                 # time_data = hf[f'time_data_{idx}'][:]
                 X_WG1_data = hf[f'X_WG1_tran_{idx}'][:]
                 X_WG2_data = hf[f'X_WG2_tran_{idx}'][:]
@@ -157,7 +157,8 @@ class GraspDataset(Dataset):
                 # Load data
                 traj_data = hf[f'traj_data_{idx}'][:]
                 # traj_data_after = hf[f'traj_data_after_{idx}'][:]
-                pc_data = hf[f'pc_data_{idx}'][:]
+                pc_data = hf[f'pc_data_{idx}'][4]
+                # print(pc_data.shape)
                 # pc_normal = hf[f'pc_normal_{idx}'][:]
                 # time_data = hf[f'time_data_{idx}'][:]
                 # time_after_data = hf[f'time_data_after_{idx}'][:]
@@ -206,7 +207,8 @@ class GraspDataset(Dataset):
 
                 # traj_with_time_tensor= torch.cat((traj_tensor, time_embeddings_expanded), dim=2)
                 # traj_after_with_time_after_tensor = torch.cat((traj_after_tensor, time_after_embeddings_expanded), dim=2)
-                pc_tensor = torch.tensor(pc_data_normalized, dtype=torch.float32)
+                pc_tensor = torch.tensor(pc_data_normalized, dtype=torch.float32).unsqueeze(0)
+                # print(pc_tensor.size())
                 # pc_normal_tensor = torch.tensor(pc_normal, dtype=torch.float32)
                 # Example usage
                 # if check_for_nans(pc_normal_tensor):
@@ -523,9 +525,9 @@ def train(pointnet_model, transformer_model, mlp_model, optimizer, criterion, tr
         xo_1_rot_true = batch['X_OG1_rot'].to(device)
         xo_2_rot_true = batch['X_OG2_rot'].to(device)
         obj_catch_t_true = batch['obj_catch_t'].to(device)
-        
-        pointnet_out = pointnet_model(batch['pointnet_input'])                          #[batch_size,1024]
         # print('size',batch['pointnet_input'].size())
+        pointnet_out = pointnet_model(batch['pointnet_input'])                          #[batch_size,1024]
+        
         # src_transformer = reshape_for_transformer(batch['transformer_input_src'])       #[5x150,batch_size,16]
         # tgt_transformer = reshape_for_transformer(batch['transformer_input_tgt'])       #[16x150,batch_size,16]
         # transformer_out = transformer_model(src_transformer, tgt_transformer)           #[16x150,batch_size,16]
@@ -534,7 +536,7 @@ def train(pointnet_model, transformer_model, mlp_model, optimizer, criterion, tr
 
         transformer_output_agg_flat = transformer_out.transpose(0, 1).mean(dim=1)
         
-        pointnet_out_agg = pointnet_out.view(batch_size, 5, 128).mean(dim=1)  # Mean pooling over the 5 dimension [batch_size, 1024]
+        pointnet_out_agg = pointnet_out.view(batch_size, 1, 128).mean(dim=1)  # Mean pooling over the 5 dimension [batch_size, 1024]
         # print('pointnet_out:',pointnet_out_agg)
         # transformer_output_agg = transformer_out.view(16, 150, batch_size, 12).mean(dim=1)  # Mean pooling over the 150 dimension [16, batch_size, 16]
         # transformer_output_agg_flat = transformer_output_agg.transpose(0, 1).reshape(batch_size, -1)  # [batch_size, 16*16]
@@ -599,7 +601,7 @@ def val(pointnet_model, transformer_model, mlp_model, val_loader):
             transformer_out = transformer_model(src_transformer, tgt = None) 
             transformer_output_agg_flat = transformer_out.transpose(0, 1).mean(dim=1)
 
-            pointnet_out_agg = pointnet_out.view(batch_size, 5, 128).mean(dim=1)  # Mean pooling over the 5 dimension [batch_size, 1024]
+            pointnet_out_agg = pointnet_out.view(batch_size, 1, 128).mean(dim=1)  # Mean pooling over the 5 dimension [batch_size, 1024]
             # transformer_output_agg = transformer_out.view(16, 150, batch_size, 12).mean(dim=1)  # Mean pooling over the 150 dimension [16, batch_size, 16]
             # transformer_output_agg_flat = transformer_output_agg.transpose(0, 1).reshape(batch_size, -1)  # [batch_size, 16*16]
             combined_features = torch.cat((pointnet_out_agg, transformer_output_agg_flat), dim=1)  # [batch_size, 1024 + 16*16]
@@ -881,9 +883,9 @@ if __name__ == '__main__':
 
         print(f'Epoch {epoch+1}: Training Loss = {train_loss:.4f}, Validation Loss = {val_loss:.4f}')
 
-    torch.save(pointnet_model.state_dict(), '/home/haonan/Catching_bot/throwing_sim/model/XW_test/pointnet_model_weights.pth')
-    torch.save(transformer_model.state_dict(), '/home/haonan/Catching_bot/throwing_sim/model/XW_test/transformer_model_weights.pth')
-    torch.save(mlp_model.state_dict(), '/home/haonan/Catching_bot/throwing_sim/model/XW_test/mlp_model_weights.pth')
+    torch.save(pointnet_model.state_dict(), '/home/haonan/Catching_bot/throwing_sim/model/1pc_test/pointnet_model_weights.pth')
+    torch.save(transformer_model.state_dict(), '/home/haonan/Catching_bot/throwing_sim/model/1pc_test/transformer_model_weights.pth')
+    torch.save(mlp_model.state_dict(), '/home/haonan/Catching_bot/throwing_sim/model/1pc_test/mlp_model_weights.pth')
 
     plt.figure(figsize=(10, 6))
     plt.plot(train_losses, label='Training Loss')
@@ -893,7 +895,7 @@ if __name__ == '__main__':
     plt.ylabel('Loss')
     plt.legend()
     # plt.show()
-    plt.savefig('orig_noodle_training_validation_losses.png')
+    plt.savefig('noodle_training_validation_losses.png')
 
 
     #uncomment below for test
